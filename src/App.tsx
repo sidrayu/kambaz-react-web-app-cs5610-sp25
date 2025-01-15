@@ -1,5 +1,10 @@
+import Labs from "./Labs";
 function App() {
-  return <h1>WELCOME to web</h1>;
+  return (
+    <div>
+      <Labs />
+    </div>
+  );
 }
 
-export default App
+export default App;
