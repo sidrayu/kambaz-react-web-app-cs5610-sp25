@@ -11,7 +11,7 @@ export default function Labs() {
       <h3>Section 01</h3>
       <h3>All Relevant Source Code:</h3>
       <a href="https://github.com/sidrayu/kambaz-react-web-app-cs5610-sp25/tree/a1">Source Code For Lab 1</a>
-      <br /><h3><a href="/Kambaz">KAMBAZ</a></h3>
+      <br />
       <h1>Labs</h1>
       
 
