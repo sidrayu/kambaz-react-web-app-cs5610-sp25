@@ -9,12 +9,9 @@ export default function Labs() {
     <div>
       <h2>Chang Yu</h2>
       <h3>Section 01</h3>
-      <h3>All Relevant Source Code:</h3>
-      <a href="https://github.com/sidrayu/kambaz-react-web-app-cs5610-sp25/tree/a1">Source Code For Lab 1</a>
+      <a href="https://github.com/sidrayu/kambaz-react-web-app-cs5610-sp25/tree/a1">GitHub For Lab 1</a>
       <br />
       <h1>Labs</h1>
-      
-
       <TOC />
       <Routes>
         <Route path="/" element={<Navigate to="Lab1" />} />
