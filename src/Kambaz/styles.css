@@ -30,7 +30,6 @@ body * {  font-family: Arial, Helvetica, sans-serif;  }
 .wd-task {
   border-left: 3px solid green !important;
 }
-
 .wd-assignment-percent-lable{
   padding: 8px 20px;
   background-color: #C8CDD1; /* Light grey background */
@@ -40,4 +39,10 @@ body * {  font-family: Arial, Helvetica, sans-serif;  }
   font-family: Arial, sans-serif; /* Font style */
   display: inline-block; /* Makes the div only as wide as its contents */
   color: black; 
+}
+
+.task-control-container {
+  white-space: nowrap;       /* Prevents text wrapping */
+  overflow: hidden;          /* Hides overflow if content is too wide */
+  max-width: 100%;           /* Ensures it doesn’t overflow the container */
 }

@@ -3,8 +3,10 @@ import { ListGroup } from 'react-bootstrap';
 import { BsGripVertical } from 'react-icons/bs';
 import ModuleControlButtons from './ModuleControlButtons';
 import LessonControlButtons from './LessonControlButtons';
+import { Container } from 'react-bootstrap';
 export default function Modules() {
   return (
+    <Container>
     <div>
       <ModulesControls /><br /><br /><br /><br />
       <ListGroup className="rounded-0" id="wd-modules">
@@ -53,5 +55,6 @@ export default function Modules() {
         </ListGroup>
       </ListGroup.Item>
     </div>
+    </Container>
   );
 }
