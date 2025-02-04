@@ -27,3 +27,17 @@ body * {  font-family: Arial, Helvetica, sans-serif;  }
 .wd-lesson {
   border-left: 3px solid green !important;
 }
+.wd-task {
+  border-left: 3px solid green !important;
+}
+
+.wd-assignment-percent-lable{
+  padding: 8px 20px;
+  background-color: #C8CDD1; /* Light grey background */
+  border: 2px solid #878888; /* Grey border */
+  border-radius: 20px; /* Rounded corners */
+  font-size: 20px; /* Text size */
+  font-family: Arial, sans-serif; /* Font style */
+  display: inline-block; /* Makes the div only as wide as its contents */
+  color: black; 
+}
