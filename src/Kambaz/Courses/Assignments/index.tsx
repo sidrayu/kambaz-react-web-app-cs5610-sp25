@@ -54,9 +54,11 @@ export default function Assignments() {
                                         <BsGripVertical className="me-2 fs-3" />
                                         <MdOutlineEditNote className="me-2" style={{ color: 'green' }} />
                                         <div>
-                                            <strong style={{ fontSize: '24px', color: "black", marginBottom: '0', display: 'block', lineHeight: '1' }}>
+                                        <Link id="wd-task-link"
+                                                to="/Kambaz/Courses/1234/Assignments/Editor"
+                                                style={{ textDecoration: 'none' }}><strong style={{ fontSize: '24px', color: "black", marginBottom: '0', display: 'block', lineHeight: '1' }}>
                                                 A2 - CSS + BOOTSTRAP
-                                            </strong>
+                                            </strong></Link>
                                             <span style={{ fontSize: '20px', color: '#555', marginTop: '0', lineHeight: '1' }}>
                                                 <span style={{ color: 'red', fontWeight: 'bold' }}>Multiple Modules</span> |
                                                 Not available until May 13 at 12:00am |
@@ -78,9 +80,12 @@ export default function Assignments() {
                                         <BsGripVertical className="me-2 fs-3" />
                                         <MdOutlineEditNote className="me-2" style={{ color: 'green' }} />
                                         <div>
+                                        <Link id="wd-task-link"
+                                                to="/Kambaz/Courses/1234/Assignments/Editor"
+                                                style={{ textDecoration: 'none' }}>
                                             <strong style={{ fontSize: '24px', color: "black", marginBottom: '0', display: 'block', lineHeight: '1' }}>
                                                 A3 - JAVASCRIPT + REACT
-                                            </strong>
+                                            </strong></Link>
                                             <span style={{ fontSize: '20px', color: '#555', marginTop: '0', lineHeight: '1' }}>
                                                 <span style={{ color: 'red', fontWeight: 'bold' }}>Multiple Modules</span> |
                                                 Not available until May 20 at 12:00am |
