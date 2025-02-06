@@ -46,3 +46,62 @@ body * {  font-family: Arial, Helvetica, sans-serif;  }
   overflow: hidden;          /* Hides overflow if content is too wide */
   max-width: 100%;           /* Ensures it doesn’t overflow the container */
 }
+
+.active {
+  background-color: white !important;
+  color: red !important;
+}
+
+.list-group-item {
+  padding: 10px 15px;
+  color: #dc3545; /* Default red text */
+  text-align: left;
+  border: none;
+  background-color: white; /* Background color */
+  transition: background-color 0.3s ease;
+}
+
+/* Active link styles */
+.active-link {
+  color: #dc3545 !important; /* Red text */
+  font-weight: bold;
+  position: relative;
+}
+
+/* Black vertical bar on the left */
+.active-link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px; /* Thickness of the vertical bar */
+  background-color: black; /* Black color for the bar */
+}
+
+.list-group-item {
+  padding: 10px 15px;
+  text-align: left;
+  border: none;
+  background-color: white;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative;  /* Required for the vertical bar */
+  cursor: pointer;
+}
+
+/* 🔥 Active link styles */
+.active-link {
+  color: #dc3545 !important;  /* Red text */
+  font-weight: bold;
+}
+
+/* Black vertical bar on the left for active links */
+.active-link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;               /* Thickness of the bar */
+  background-color: black;  /* Black color for the bar */
+}
