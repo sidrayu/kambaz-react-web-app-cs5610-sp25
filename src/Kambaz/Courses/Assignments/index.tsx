@@ -6,11 +6,14 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { MdOutlineEditNote } from "react-icons/md";
 import { ListGroup, Container } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
-import assignments from "../Database/assignments.json";
+import { assignments } from "../../Database";
+
 
 export default function Assignments() {
-    const { courseId } = useParams();
-    const courseAssignments = assignments.filter(assignment => assignment.course === courseId);
+    const { cid } = useParams();
+    const courseAssignments = assignments.filter(
+        assignment => assignment.courseId === cid
+    );
 
     return (
         <Container>
@@ -33,7 +36,7 @@ export default function Assignments() {
                                             <div>
                                                 <Link 
                                                     id="wd-task-link"
-                                                    to={`/Kambaz/Courses/${courseId}/Assignments/Editor/${assignment._id}`}
+                                                    to={`/Kambaz/Courses/${cid}/Assignments/Editor/${assignment._id}`}
                                                     style={{ textDecoration: 'none' }}
                                                 >
                                                     <strong style={{ 
@@ -53,10 +56,10 @@ export default function Assignments() {
                                                     lineHeight: '1' 
                                                 }}>
                                                     <span style={{ color: 'red', fontWeight: 'bold' }}>
-                                                        {assignment.module}
+                                                        {assignment.modules}
                                                     </span> |
-                                                    Not available until {assignment.availableDate} |
-                                                    <strong> Due </strong> {assignment.dueDate} |
+                                                    Not available until {new Date(assignment.availableDate).toLocaleDateString()} at {new Date(assignment.availableDate).toLocaleTimeString()} |
+                                                    <strong> Due </strong> {new Date(assignment.dueDate).toLocaleDateString()} at {new Date(assignment.dueDate).toLocaleTimeString()} |
                                                     {assignment.points} pts
                                                 </span>
                                             </div>
