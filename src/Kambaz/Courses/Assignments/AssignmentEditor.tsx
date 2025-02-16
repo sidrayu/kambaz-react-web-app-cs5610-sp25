@@ -1,90 +1,56 @@
-import { Container, Form, Row, Col, Button, Card } from "react-bootstrap";
+import { Container, Form, Row, Col, Card } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
+import { assignments, courses } from "../../Database";
 
 export default function AssignmentEditor() {
+    const { cid, assignmentId } = useParams();
+    const assignment = assignments.find(
+        a => a.courseId === cid && a._id === assignmentId
+    );
+    const course =courses.find(c => c._id === cid)
+    if (!assignment) {
+        return <div>Assignment not found</div>;
+    }
+
     return (
         <Container className="mt-4">
             <Form>
                 {/* Assignment Name */}
                 <Form.Group className="mb-3" controlId="assignmentName">
-                    <Form.Label><strong>Assignment Name</strong></Form.Label>
+                    <Form.Label>Assignment Name</Form.Label>
                     <Col sm={5}>
-                        <Form.Control type="text" placeholder="A1" /></Col>
+                    
+                        <Form.Control 
+                            type="text" 
+                            defaultValue={assignment.title}
+                        />
+                    </Col>
                 </Form.Group>
 
                 {/* Description */}
-
-                <Form>
-                    <Form.Group as={Row} className="mb-3" controlId="wd-description">
-                        <Col sm={5}>
-                            <Form.Control
-                                as="textarea"
-                                rows={6}
-                                defaultValue={`The assignment is available online. Submit a link to the landing page of your Web application running on Netlify. The landing page should include the following:
-- Your full name and section
-- Links to each of the lab assignments
-- Link to the Kanbas application
-- Links to all relevant source code repositories
-- The Kanbas application should include a link to navigate back to the landing page.`}
-                                className="shadow-sm"
-                            />
-                        </Col>
-                    </Form.Group>
-                </Form>
-
+                <Form.Group as={Row} className="mb-3" controlId="wd-description">
+                    <Col sm={5}>
+                        <Form.Control
+                            as="textarea"
+                            rows={6}
+                            defaultValue={course?.description}
+                            className="shadow-sm"
+                        />
+                    </Col>
+                </Form.Group>
 
                 {/* Points */}
                 <Form.Group as={Row} className="mb-3" controlId="points">
                     <Form.Label column sm={2}>Points</Form.Label>
                     <Col sm={3}>
-                        <Form.Control type="number" defaultValue={100} />
+                        <Form.Control 
+                            type="number" 
+                            defaultValue={assignment.points} 
+                        />
                     </Col>
                 </Form.Group>
 
-                {/* Assignment Group */}
-                <Form.Group as={Row} className="mb-3" controlId="assignmentGroup">
-                    <Form.Label column sm={2}>Assignment Group</Form.Label>
-                    <Col sm={3}>
-                        <Form.Select>
-                            <option>ASSIGNMENTS</option>
-                            <option>QUIZZES</option>
-                            <option>PROJECTS</option>
-                        </Form.Select>
-                    </Col>
-                </Form.Group>
-
-                {/* Display Grade As */}
-                <Form.Group as={Row} className="mb-3" controlId="displayGrade">
-                    <Form.Label column sm={2}>Display Grade as</Form.Label>
-                    <Col sm={3}>
-                        <Form.Select>
-                            <option>Percentage</option>
-                            <option>Points</option>
-                            <option>Complete/Incomplete</option>
-                        </Form.Select>
-                    </Col>
-                </Form.Group>
-
-                {/* Submission Type */}
-                <Form.Group className="mb-3" controlId="submissionType">
-                    <Col sm={4}>
-                        <Form.Label>Submission Type</Form.Label>
-                        <Form.Select>
-                            <option>Online</option>
-                            <option>On Paper</option>
-                            <option>No Submission</option>
-                        </Form.Select>
-                    </Col>
-
-                    {/* Online Entry Options */}
-                    <div className="mt-2">
-                        <Form.Label><strong>Online Entry Options</strong></Form.Label>
-                        <Form.Check type="checkbox" label="Text Entry" />
-                        <Form.Check type="checkbox" label="Website URL" defaultChecked />
-                        <Form.Check type="checkbox" label="Media Recordings" />
-                        <Form.Check type="checkbox" label="Student Annotation" />
-                        <Form.Check type="checkbox" label="File Uploads" />
-                    </div>
-                </Form.Group>
+                {/* ...existing code for other form groups... */}
 
                 {/* Assign Section */}
                 <Col sm={4}>
@@ -96,14 +62,20 @@ export default function AssignmentEditor() {
 
                         <Form.Group className="mb-3" controlId="dueDate">
                             <Form.Label>Due</Form.Label>
-                            <Form.Control type="datetime-local" defaultValue="2024-05-13T23:59" />
+                            <Form.Control 
+                                type="datetime-local" 
+                                defaultValue={assignment.dueDate}
+                            />
                         </Form.Group>
 
                         <Row>
                             <Col>
                                 <Form.Group controlId="availableFrom">
                                     <Form.Label>Available from</Form.Label>
-                                    <Form.Control type="datetime-local" defaultValue="2024-05-06T00:00" />
+                                    <Form.Control 
+                                        type="datetime-local" 
+                                        defaultValue={assignment.availableDate}
+                                    />
                                 </Form.Group>
                             </Col>
                             <Col>
@@ -117,8 +89,18 @@ export default function AssignmentEditor() {
 
                     {/* Action Buttons */}
                     <div className="d-flex justify-content-end gap-2">
-                        <Button variant="secondary">Cancel</Button>
-                        <Button variant="danger">Save</Button>
+                        <Link 
+                            to={`/Kambaz/Courses/${cid}/Assignments`}
+                            className="btn btn-secondary"
+                        >
+                            Cancel
+                        </Link>
+                        <Link 
+                            to={`/Kambaz/Courses/${cid}/Assignments`}
+                            className="btn btn-danger"
+                        >
+                            Save
+                        </Link>
                     </div>
                 </Col>
             </Form>
