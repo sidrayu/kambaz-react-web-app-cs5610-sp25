@@ -1,5 +1,7 @@
+import { Container } from "react-bootstrap";
 export default function Lab1() {
   return (
+    <Container>
     <div id="wd-lab1">
       <h2>Lab 1</h2>
       <h3>HTML Examples</h3>
@@ -244,5 +246,6 @@ to get dummy text<br/>
 
     </div>
 
+  </Container>
   );
 }
