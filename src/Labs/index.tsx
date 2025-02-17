@@ -12,6 +12,9 @@ export default function Labs() {
       <a href="https://github.com/sidrayu/kambaz-react-web-app-cs5610-sp25/tree/a1">GitHub For Lab 1</a>
       <br />
       <a href="https://github.com/sidrayu/kambaz-react-web-app-cs5610-sp25/tree/a2">GitHub For Lab 2</a>
+      <br />
+      <a href="https://github.com/sidrayu/kambaz-react-web-app-cs5610-sp25/tree/a3">GitHub For Lab 3</a>
+      <br />
       
       <br />
       <h1>Labs</h1>

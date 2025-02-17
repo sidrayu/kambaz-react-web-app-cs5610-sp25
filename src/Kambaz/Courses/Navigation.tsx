@@ -1,4 +1,4 @@
-import { NavLink, useParams, useLocation } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 const navLinkStyles = ({ isActive }: { isActive: boolean }) =>
   isActive
@@ -7,7 +7,6 @@ const navLinkStyles = ({ isActive }: { isActive: boolean }) =>
 
 export default function CourseNavigation() {
   const { cid } = useParams();
-  const { pathname } = useLocation();
   const links = [
     { label: "Home", path: `/Kambaz/Courses/${cid}/Home` },
     { label: "Modules", path: `/Kambaz/Courses/${cid}/Modules` },
