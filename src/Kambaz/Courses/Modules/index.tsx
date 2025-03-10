@@ -9,6 +9,7 @@ import { useState } from "react";
 
 export default function Modules() {
   const { cid } = useParams();
+  
   const [modules, setModules] = useState<any[]>(db.modules);
   const [moduleName, setModuleName] = useState("");
 
@@ -24,18 +25,18 @@ export default function Modules() {
   };
 
   const deleteModule = (moduleId: string) => {
-    setModules(modules.filter((m) => m.id !== moduleId));
+    setModules(modules.filter((m) => m._id !== moduleId));
   };
 
   const editModule = (moduleId: string) => {
     setModules(modules.map((m) => 
-      m.id === moduleId ? { ...m, editing: true } : m
+      m._id === moduleId ? { ...m, editing: true } : m
     ));
   };
 
   const updateModule = (module: any) => {
     setModules(modules.map((m) => 
-      m.id === module.id ? module : m
+      m._id === module._id ? module : m
     ));
   };
 
@@ -51,7 +52,7 @@ export default function Modules() {
           {modules
             .filter((module: any) => module.course === cid)
             .map((module: any) => (
-              <ListGroup.Item key={module.id} className="wd-module p-0 mb-5 fs-5 border-gray">
+              <ListGroup.Item key={module._id} className="wd-module p-0 mb-5 fs-5 border-gray">
                 <div className="wd-title p-3 ps-2 bg-secondary">
                   <BsGripVertical className="me-2 fs-3" />
                   {!module.editing && module.name}
@@ -68,7 +69,7 @@ export default function Modules() {
                     />
                   )}
                   <ModuleControlButtons
-                    moduleId={module.id}
+                    moduleId={module._id}
                     deleteModule={deleteModule}
                     editModule={editModule}
                   />
@@ -76,7 +77,7 @@ export default function Modules() {
                 {module.lessons && (
                   <ListGroup className="wd-lessons rounded-0">
                     {module.lessons.map((lesson: any) => (
-                      <ListGroup.Item key={lesson.id} className="wd-lesson p-3 ps-1">
+                      <ListGroup.Item key={lesson._id} className="wd-lesson p-3 ps-1">
                         <BsGripVertical className="me-2 fs-3" /> {lesson.name} <LessonControlButtons />
                       </ListGroup.Item>
                     ))}
