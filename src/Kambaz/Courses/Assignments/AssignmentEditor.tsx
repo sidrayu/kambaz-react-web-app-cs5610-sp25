@@ -20,8 +20,8 @@ export default function AssignmentEditor() {
     const [description, setDescription] = useState(existingAssignment?.description || "");
     const [points, setPoints] = useState(existingAssignment?.points || 100);
     const [dueDate, setDueDate] = useState(existingAssignment?.dueDate || "");
-    const [availableDate, setAvailableDate] = useState(existingAssignment?.availableDate || "");
-    // const [availableUntil, setAvailableUntil] = useState(existingAssignment?.availableDate || "");
+    const [availableFromDate, setAvailableDate] = useState(existingAssignment?.availableFromDate || "");
+    const [availableUtilDate, setAvailableUntil] = useState(existingAssignment?.availableUtilDate || "");
 
     // If editing and assignment not found
     console.log("existingAssignment", existingAssignment);
@@ -36,11 +36,11 @@ export default function AssignmentEditor() {
             courseId: cid || "",
             title,
             modules,
-            availableDate,
+            availableFromDate,
+            availableUtilDate,
             dueDate,
             points,
             description,
-            // availableUntil,
         };
 
         // Update existing or add new assignment
@@ -124,7 +124,7 @@ export default function AssignmentEditor() {
                                     <Form.Label>Available from</Form.Label>
                                     <Form.Control 
                                         type="datetime-local" 
-                                        value={availableDate}
+                                        value={availableFromDate}
                                         onChange={(e) => setAvailableDate(e.target.value)}
                                     />
                                 </Form.Group>
@@ -134,8 +134,8 @@ export default function AssignmentEditor() {
                                     <Form.Label>Until</Form.Label>
                                     <Form.Control 
                                         type="datetime-local"
-                                        value={availableDate}
-                                        onChange={(e) => setAvailableDate(e.target.value)}
+                                        value={availableUtilDate}
+                                        onChange={(e) => setAvailableUntil(e.target.value)}
                                     />
                                 </Form.Group>
                             </Col>

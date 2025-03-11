@@ -58,8 +58,8 @@ export default function Assignments() {
                                                 }}>
                                                     <span style={{ color: 'red', fontWeight: 'bold' }}>
                                                         {assignment.modules}
-                                                    </span> |
-                                                    Not available until {new Date(assignment.availableDate).toLocaleDateString()} at {new Date(assignment.availableDate).toLocaleTimeString()} |
+                                                    </span> | Not available until {new Date(assignment.availableFromDate).toLocaleDateString()} at {new Date(assignment.availableFromDate).toLocaleTimeString()}  |
+                                                    Not available until {new Date(assignment.availableUtilDate).toLocaleDateString()} at {new Date(assignment.availableUtilDate).toLocaleTimeString()} |
                                                     <strong> Due </strong> {new Date(assignment.dueDate).toLocaleDateString()} at {new Date(assignment.dueDate).toLocaleTimeString()} |
                                                     {assignment.points} pts
                                                 </span>
