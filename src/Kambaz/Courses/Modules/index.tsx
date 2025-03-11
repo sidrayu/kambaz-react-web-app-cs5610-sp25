@@ -26,6 +26,7 @@ export default function Modules() {
             dispatch(addModule({ name: moduleName, course: cid }));
             setModuleName("");
           }}
+          isFaculty={isFaculty}
         />
         <br /><br /><br /><br />
         <ListGroup className="rounded-0" id="wd-modules">
