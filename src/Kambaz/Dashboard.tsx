@@ -6,10 +6,10 @@ import * as db from "./Database";
 
 export default function Dashboard(
     { courses, course, setCourse, addNewCourse,
-        deleteCourse, updateCourse }: {
+        deleteCourse, updateCourse, isFaculty }: {
             courses: any[]; course: any; setCourse: (course: any) => void;
             addNewCourse: () => void; deleteCourse: (courseId: string) => void;
-            updateCourse: () => void;
+            updateCourse: () => void; isFaculty: () => boolean;
         }) {
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     const { enrollments } = db;

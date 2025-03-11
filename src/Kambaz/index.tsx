@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from "react-router";
 import { useState } from "react";
+import { useUserRole } from "./hooks/useUserRole";
 import Account from "./Account";
 import ProtectedRoute from "./Account/ProtectedRoute";
 import Dashboard from "./Dashboard";
@@ -11,6 +12,9 @@ import "./styles.css";
 
 export default function Kambaz() {
     const [coursesList, setCourses] = useState<any[]>(courses);
+    const { isFaculty } = useUserRole();
+    console.log('isFaculty:', isFaculty());
+    
     const [course, setCourse] = useState<any>({
         _id: "0",
         name: "New Course",
@@ -22,15 +26,18 @@ export default function Kambaz() {
     });
 
     const addNewCourse = () => {
+        if (!isFaculty()) return;
         const newCourse = { ...course, _id: uuidv4() };
         setCourses([...coursesList, newCourse]);
     };
 
     const deleteCourse = (courseId: string) => {
+        if (!isFaculty()) return;
         setCourses(coursesList.filter((course) => course._id !== courseId));
     };
 
     const updateCourse = () => {
+        if (!isFaculty()) return;
         setCourses(
             coursesList.map((c) => {
                 if (c._id === course._id) {
@@ -51,17 +58,23 @@ export default function Kambaz() {
                     <Route path="/Account/*" element={<Account />} />
                     <Route path="/Dashboard" element={
                         <ProtectedRoute>
-                        <Dashboard
-                            courses={coursesList}
-                            course={course}
-                            setCourse={setCourse}
-                            addNewCourse={addNewCourse}
-                            deleteCourse={deleteCourse}
-                            updateCourse={updateCourse}
-                        />
+                            <Dashboard
+                                courses={coursesList}
+                                course={course}
+                                setCourse={setCourse}
+                                addNewCourse={addNewCourse}
+                                deleteCourse={deleteCourse}
+                                updateCourse={updateCourse}
+                                isFaculty={isFaculty}
+                            />
                         </ProtectedRoute>
                     } />
-                    <Route path="/Courses/:cid/*" element={<Courses courses={coursesList} />} />
+                    <Route path="/Courses/:cid/*" element={
+                        <Courses 
+                            courses={coursesList}
+                            // isFaculty={isFaculty()} 
+                        />
+                    } />
                     <Route path="/Calendar" element={<h1>Calendar</h1>} />
                     <Route path="/Inbox" element={<h1>Inbox</h1>} />
                 </Routes>
