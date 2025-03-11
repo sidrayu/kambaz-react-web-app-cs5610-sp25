@@ -1,15 +1,63 @@
 import { Container, Form, Row, Col, Card } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { assignments } from "../../Database";
+import { useState } from "react";
 
 export default function AssignmentEditor() {
     const { cid, assignmentId } = useParams();
-    const assignment = assignments.find(
-        a => a.courseId === cid && a._id === assignmentId
-    );
-    if (!assignment) {
+    console.log(cid, assignmentId);
+    
+    const navigate = useNavigate();
+    
+    // Find existing assignment or create empty template for new assignment
+    const existingAssignment = assignmentId 
+        ? assignments.find(a => a.courseId === cid && a._id === assignmentId)
+        : null;
+    
+    // Initialize state with existing values or defaults for new assignment 
+    const [title, setTitle] = useState(existingAssignment?.title || "");
+    const [modules, setModules] = useState(existingAssignment?.modules || "");
+    const [description, setDescription] = useState(existingAssignment?.description || "");
+    const [points, setPoints] = useState(existingAssignment?.points || 100);
+    const [dueDate, setDueDate] = useState(existingAssignment?.dueDate || "");
+    const [availableDate, setAvailableDate] = useState(existingAssignment?.availableDate || "");
+    // const [availableUntil, setAvailableUntil] = useState(existingAssignment?.availableDate || "");
+
+    // If editing and assignment not found
+    console.log("existingAssignment", existingAssignment);
+    if (assignmentId != "AddNewAssignment" && !existingAssignment) {  
         return <div>Assignment not found</div>;
     }
+
+    // Handle form submission
+    const handleSave = () => {
+        const newAssignment = {
+            _id: existingAssignment?._id || `assignment-${Date.now()}`, // Generate ID for new assignments
+            courseId: cid || "",
+            title,
+            modules,
+            availableDate,
+            dueDate,
+            points,
+            description,
+            // availableUntil,
+        };
+
+        // Update existing or add new assignment
+        if (existingAssignment) {
+            // Update existing assignment in the array
+            const index = assignments.findIndex(a => a._id === existingAssignment._id);
+            if (index !== -1) {
+                assignments[index] = newAssignment;
+            }
+        } else {
+            // Add new assignment to array
+            assignments.push(newAssignment);
+        }
+
+        // Navigate back to assignments list
+        navigate(`/Kambaz/Courses/${cid}/Assignments`);
+    };
 
     return (
         <Container className="mt-4">
@@ -18,10 +66,10 @@ export default function AssignmentEditor() {
                 <Form.Group className="mb-3" controlId="assignmentName">
                     <Form.Label>Assignment Name</Form.Label>
                     <Col sm={5}>
-                    
                         <Form.Control 
                             type="text" 
-                            defaultValue={assignment.title}
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
                         />
                     </Col>
                 </Form.Group>
@@ -32,7 +80,8 @@ export default function AssignmentEditor() {
                         <Form.Control
                             as="textarea"
                             rows={6}
-                            defaultValue={assignment.description}
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
                             className="shadow-sm"
                         />
                     </Col>
@@ -44,7 +93,8 @@ export default function AssignmentEditor() {
                     <Col sm={3}>
                         <Form.Control 
                             type="number" 
-                            defaultValue={assignment.points} 
+                            value={points}
+                            onChange={(e) => setPoints(Number(e.target.value))} 
                         />
                     </Col>
                 </Form.Group>
@@ -63,7 +113,8 @@ export default function AssignmentEditor() {
                             <Form.Label>Due</Form.Label>
                             <Form.Control 
                                 type="datetime-local" 
-                                defaultValue={assignment.dueDate}
+                                value={dueDate}
+                                onChange={(e) => setDueDate(e.target.value)}
                             />
                         </Form.Group>
 
@@ -73,14 +124,19 @@ export default function AssignmentEditor() {
                                     <Form.Label>Available from</Form.Label>
                                     <Form.Control 
                                         type="datetime-local" 
-                                        defaultValue={assignment.availableDate}
+                                        value={availableDate}
+                                        onChange={(e) => setAvailableDate(e.target.value)}
                                     />
                                 </Form.Group>
                             </Col>
                             <Col>
                                 <Form.Group controlId="availableUntil">
                                     <Form.Label>Until</Form.Label>
-                                    <Form.Control type="datetime-local" />
+                                    <Form.Control 
+                                        type="datetime-local"
+                                        value={availableDate}
+                                        onChange={(e) => setAvailableDate(e.target.value)}
+                                    />
                                 </Form.Group>
                             </Col>
                         </Row>
@@ -94,12 +150,13 @@ export default function AssignmentEditor() {
                         >
                             Cancel
                         </Link>
-                        <Link 
-                            to={`/Kambaz/Courses/${cid}/Assignments`}
+                        <button 
+                            type="button"
+                            onClick={handleSave}
                             className="btn btn-danger"
                         >
                             Save
-                        </Link>
+                        </button>
                     </div>
                 </Col>
             </Form>
