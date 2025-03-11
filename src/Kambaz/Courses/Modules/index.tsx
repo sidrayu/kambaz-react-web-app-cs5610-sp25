@@ -7,8 +7,10 @@ import { useParams } from "react-router";
 import { useState } from "react";
 import { addModule, editModule, updateModule, deleteModule } from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
+import { useUserRole } from "../../hooks/useUserRole";
 
 export default function Modules() {
+  const { isFaculty } = useUserRole();
   const { cid } = useParams();
   const [moduleName, setModuleName] = useState("");
   const { modules } = useSelector((state: any) => state.modulesReducer);
@@ -54,6 +56,7 @@ export default function Modules() {
                     moduleId={module._id}
                     deleteModule={(moduleId) => dispatch(deleteModule(moduleId))}
                     editModule={(moduleId) => dispatch(editModule(moduleId))}
+                    isFaculty={isFaculty}
                   />
                 </div>
                 {module.lessons && (

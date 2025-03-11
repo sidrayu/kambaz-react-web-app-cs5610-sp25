@@ -7,11 +7,13 @@ import GreenCheckmark from "./GreenCheckmark";
 export default function ModuleControlButtons({
   moduleId,
   deleteModule,
-  editModule
+  editModule,
+  isFaculty,
 }: {
   moduleId: string;
   deleteModule: (moduleId: string) => void;
   editModule: (moduleId: string) => void;
+  isFaculty: () => boolean;
 }) {  
   return (
     <div className="float-end">

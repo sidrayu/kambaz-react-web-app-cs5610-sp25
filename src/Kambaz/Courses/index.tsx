@@ -7,7 +7,7 @@ import AssignmentEditor from "./Assignments/AssignmentEditor";
 import { FaAlignJustify } from "react-icons/fa";
 import PeopleTable from "./People/Table";
 
-export default function Courses({ courses }: { courses: any[]; }) {
+export default function Courses({ courses, isFaculty }: { courses: any[]; isFaculty: () => boolean;}) {
   const { cid } = useParams();
   const course = courses.find((course) => course._id === cid);
   const { pathname } = useLocation();

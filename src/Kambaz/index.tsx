@@ -13,8 +13,7 @@ import "./styles.css";
 export default function Kambaz() {
     const [coursesList, setCourses] = useState<any[]>(courses);
     const { isFaculty } = useUserRole();
-    console.log('isFaculty:', isFaculty());
-    
+
     const [course, setCourse] = useState<any>({
         _id: "0",
         name: "New Course",
@@ -72,7 +71,7 @@ export default function Kambaz() {
                     <Route path="/Courses/:cid/*" element={
                         <Courses 
                             courses={coursesList}
-                            // isFaculty={isFaculty()} 
+                            isFaculty={isFaculty} 
                         />
                     } />
                     <Route path="/Calendar" element={<h1>Calendar</h1>} />
