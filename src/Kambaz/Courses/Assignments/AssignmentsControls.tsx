@@ -1,10 +1,20 @@
 import { FaPlus } from "react-icons/fa6";
 import { Button } from "react-bootstrap";
 import { BiSearch } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
+
 export default function AssignmentsControls() {
+  const navigate = useNavigate();
+  
   return (
     <div id="wd-modules-controls" className="text-nowrap">
-      <Button variant="danger" size="lg" className="me-1 float-end" id="wd-add-module-btn">
+      <Button 
+        variant="danger" 
+        size="lg" 
+        className="me-1 float-end" 
+        id="wd-add-module-btn"
+        onClick={() => navigate("./AssignmentsControls")}
+      >
         <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
         Assigment
       </Button>

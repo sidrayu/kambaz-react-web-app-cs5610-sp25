@@ -1,13 +1,12 @@
 import { Container, Form, Row, Col, Card } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
-import { assignments, courses } from "../../Database";
+import { assignments } from "../../Database";
 
 export default function AssignmentEditor() {
     const { cid, assignmentId } = useParams();
     const assignment = assignments.find(
         a => a.courseId === cid && a._id === assignmentId
     );
-    const course =courses.find(c => c._id === cid)
     if (!assignment) {
         return <div>Assignment not found</div>;
     }
@@ -33,7 +32,7 @@ export default function AssignmentEditor() {
                         <Form.Control
                             as="textarea"
                             rows={6}
-                            defaultValue={course?.description}
+                            defaultValue={assignment.description}
                             className="shadow-sm"
                         />
                     </Col>
