@@ -2,10 +2,18 @@ import { Container, Form, Row, Col, Card } from "react-bootstrap";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { assignments } from "../../Database";
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addAssignment, updateAssignment } from "./reducer";
 
 export default function AssignmentEditor() {
+
+    const displayDate = (date: string) => {
+        return date ? new Date(date).toISOString().slice(0, 16) : "";
+    };
+
     const { cid, assignmentId } = useParams();
-    
+    const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     
     // Find existing assignment or create empty template for new assignment
@@ -21,16 +29,48 @@ export default function AssignmentEditor() {
     const [dueDate, setDueDate] = useState(existingAssignment?.dueDate || "");
     const [availableFromDate, setAvailableDate] = useState(existingAssignment?.availableFromDate || "");
     const [availableUtilDate, setAvailableUntil] = useState(existingAssignment?.availableUtilDate || "");
+    console.log("dueDate", dueDate);
 
     // If editing and assignment not found
     if (assignmentId != "AddNewAssignment" && !existingAssignment) {  
         return <div>Assignment not found</div>;
     }
 
+    const handlAddAssignment = (assignment: any) => {
+        dispatch(
+            addAssignment({
+                courseId: assignment.courseId,
+                title: assignment.title,
+                modules: assignment.modules,
+                availableFromDate: assignment.availableFromDate,
+                availableUtilDate: assignment.availableUtilDate,
+                dueDate: assignment.dueDate,
+                points: assignment.points,          
+                description: assignment.description,
+            })
+        );
+    };
+
+    const handlUpdateAssignment = (assignment: any) => {
+        dispatch(
+            updateAssignment({
+                _id: assignment._id,
+                courseId: assignment.courseId,
+                title: assignment.title,
+                modules: assignment.modules,
+                availableFromDate: assignment.availableFromDate,
+                availableUtilDate: assignment.availableUtilDate,
+                dueDate: assignment.dueDate,
+                points: assignment.points,          
+                description: assignment.description,
+            })
+        );
+    };
+
     // Handle form submission
     const handleSave = () => {
-        const newAssignment = {
-            _id: existingAssignment?._id || `assignment-${Date.now()}`, // Generate ID for new assignments
+        const updatedAssignment = {
+            _id: existingAssignment?._id || '',
             courseId: cid || "",
             title,
             modules,
@@ -43,15 +83,11 @@ export default function AssignmentEditor() {
 
         // Update existing or add new assignment
         if (existingAssignment) {
-            // Update existing assignment in the array
-            const index = assignments.findIndex(a => a._id === existingAssignment._id);
-            if (index !== -1) {
-                assignments[index] = newAssignment;
-            }
-        } else {
-            // Add new assignment to array
-            assignments.push(newAssignment);
+            handlUpdateAssignment(updatedAssignment);
         }
+        else {
+            handlAddAssignment(updatedAssignment);
+        }        
 
         // Navigate back to assignments list
         navigate(`/Kambaz/Courses/${cid}/Assignments`);
@@ -109,9 +145,9 @@ export default function AssignmentEditor() {
 
                         <Form.Group className="mb-3" controlId="dueDate">
                             <Form.Label>Due</Form.Label>
-                            <Form.Control 
-                                type="datetime-local" 
-                                value={dueDate}
+                            <Form.Control
+                                type="datetime-local"
+                                value={displayDate(dueDate)}
                                 onChange={(e) => setDueDate(e.target.value)}
                             />
                         </Form.Group>
@@ -121,8 +157,8 @@ export default function AssignmentEditor() {
                                 <Form.Group controlId="availableFrom">
                                     <Form.Label>Available from</Form.Label>
                                     <Form.Control 
-                                        type="datetime-local" 
-                                        value={availableFromDate}
+                                        type="datetime-local"
+                                        value={displayDate(availableFromDate)}
                                         onChange={(e) => setAvailableDate(e.target.value)}
                                     />
                                 </Form.Group>
@@ -132,7 +168,7 @@ export default function AssignmentEditor() {
                                     <Form.Label>Until</Form.Label>
                                     <Form.Control 
                                         type="datetime-local"
-                                        value={availableUtilDate}
+                                        value={displayDate(availableUtilDate)}
                                         onChange={(e) => setAvailableUntil(e.target.value)}
                                     />
                                 </Form.Group>

@@ -5,7 +5,8 @@ import { FaTrash } from "react-icons/fa";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-export default function TaskControlButtons({assignmentId, deleteAssignment }: { assignmentId: string, deleteAssignment: Function }) {
+export default function TaskControlButtons(
+  { assignmentId, deleteAssignment } : { assignmentId: string, deleteAssignment: Function }) {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   const handleShowDialog = () => {
