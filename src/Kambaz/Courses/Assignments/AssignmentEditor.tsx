@@ -22,13 +22,12 @@ export default function AssignmentEditor({isFaculty}: {isFaculty: () => boolean}
     
     // Initialize state with existing values or defaults for new assignment 
     const [title, setTitle] = useState(existingAssignment?.title || "");
-    const [modules, setModules] = useState(existingAssignment?.modules || "");
+    const [modules, setModules] = useState(existingAssignment?.modules || "Module 1");
     const [description, setDescription] = useState(existingAssignment?.description || "");
-    const [points, setPoints] = useState(existingAssignment?.points || 100);
-    const [dueDate, setDueDate] = useState(existingAssignment?.dueDate || "");
-    const [availableFromDate, setAvailableDate] = useState(existingAssignment?.availableFromDate || "");
-    const [availableUtilDate, setAvailableUntil] = useState(existingAssignment?.availableUtilDate || "");
-    console.log("dueDate", dueDate);
+    const [points, setPoints] = useState(existingAssignment?.points || 0);
+    const [dueDate, setDueDate] = useState(existingAssignment?.dueDate || "2025/01/01");
+    const [availableFromDate, setAvailableDate] = useState(existingAssignment?.availableFromDate ||  "2025/01/01");
+    const [availableUtilDate, setAvailableUntil] = useState(existingAssignment?.availableUtilDate ||  "2025/01/01");
 
     // If editing and assignment not found
     if (assignmentId != "AddNewAssignment" && !existingAssignment) {  

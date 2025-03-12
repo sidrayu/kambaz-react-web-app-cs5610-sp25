@@ -80,7 +80,7 @@ export default function Dashboard(
                 </>
             )}
             <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2> <hr />
-            {currentUser?.role === "STUDENT" && (
+            {!isFaculty() && (
                 <button className="btn btn-primary float-end" onClick={toggleShowAll}>
                     Enrollments
                 </button>
@@ -123,7 +123,7 @@ export default function Dashboard(
                                             </Button>
                                         </>
                                     )}
-                                    {currentUser?.role === "STUDENT" && (
+                                    {!isFaculty() && (
                                         enrollments.some(e => e.user === currentUser._id && e.course === course._id)
                                             ? <Button variant="danger"
                                                 onClick={() => dispatch(unenrollCourse({ userId: currentUser._id, courseId: course._id }))}>
