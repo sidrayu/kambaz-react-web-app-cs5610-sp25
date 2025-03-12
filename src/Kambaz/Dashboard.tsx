@@ -29,38 +29,38 @@ export default function Dashboard(
                         </button>
                     </h5>
                     <FormControl
-                        value={course.name}
+                        value={course.name || ""}
                         placeholder="Course Name"
                         className="mb-2"
                         onChange={(e) => setCourse({ ...course, name: e.target.value })}
                     />
                     <FormControl
-                        value={course.number}
+                        value={course.number || ""}
                         placeholder="Course Number"
                         className="mb-2"
                         onChange={(e) => setCourse({ ...course, number: e.target.value })}
                     />
                     <FormControl
                         type="date"
-                        value={course.startDate}
+                        value={course.startDate || ""}
                         className="mb-2"
                         onChange={(e) => setCourse({ ...course, startDate: e.target.value })}
                     />
                     <FormControl
                         type="date"
-                        value={course.endDate}
+                        value={course.endDate || ""}
                         className="mb-2"
                         onChange={(e) => setCourse({ ...course, endDate: e.target.value })}
                     />
                     <FormControl
-                        value={course.image}
+                        value={course.image || ""}
                         placeholder="Course Image URL"
                         className="mb-2"
                         onChange={(e) => setCourse({ ...course, image: e.target.value })}
                     />
                     <FormControl
                         as="textarea"
-                        value={course.description}
+                        value={course.description || ""}
                         placeholder="Course Description"
                         rows={3}
                         className="mb-2"
