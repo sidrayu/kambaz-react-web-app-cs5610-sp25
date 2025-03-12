@@ -1,11 +1,10 @@
 import { Container, Form, Row, Col, Card } from "react-bootstrap";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { assignments } from "../../Database";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addAssignment, updateAssignment } from "./reducer";
 
-export default function AssignmentEditor() {
+export default function AssignmentEditor({isFaculty}: {isFaculty: () => boolean}) {
 
     const displayDate = (date: string) => {
         return date ? new Date(date).toISOString().slice(0, 16) : "";
@@ -177,6 +176,7 @@ export default function AssignmentEditor() {
                     </Card>
 
                     {/* Action Buttons */}
+                    {isFaculty() && (
                     <div className="d-flex justify-content-end gap-2">
                         <Link 
                             to={`/Kambaz/Courses/${cid}/Assignments`}
@@ -192,6 +192,7 @@ export default function AssignmentEditor() {
                             Save
                         </button>
                     </div>
+                    )}
                 </Col>
             </Form>
         </Container>
