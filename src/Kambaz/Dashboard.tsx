@@ -75,8 +75,10 @@ export default function Dashboard(
                     {courses.filter((course) =>
                         enrollments.some(
                             (enrollment) =>
-                                enrollment.user === currentUser._id &&
-                                enrollment.course === course._id
+                                isFaculty() 
+                                ? true 
+                                : (enrollment.user === currentUser._id &&
+                                enrollment.course === course._id)
                         ))
                         .map((course) => (
                             <div key={course._id} className="col" style={{ width: "300px" }}>
