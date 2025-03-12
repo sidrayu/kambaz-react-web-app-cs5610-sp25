@@ -1,17 +1,18 @@
 import { Routes, Route, Navigate } from "react-router";
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useUserRole } from "./hooks/useUserRole";
 import Account from "./Account";
 import ProtectedRoute from "./Account/ProtectedRoute";
 import Dashboard from "./Dashboard";
 import KambazNavigation from "./Navigation";
 import Courses from "./Courses";
-import courses from "./Database/courses.json";
-import { v4 as uuidv4 } from "uuid";
+import { addCourse, deleteCourse, updateCourse, setCourses } from "./Courses/reducer";
+import { useState } from "react";
 import "./styles.css";
 
 export default function Kambaz() {
-    const [coursesList, setCourses] = useState<any[]>(courses);
+    const coursesList = useSelector((state: any) => state.coursesReducer.courses);
+    const dispatch = useDispatch();
     const { isFaculty } = useUserRole();
 
     const [course, setCourse] = useState<any>({
@@ -24,28 +25,19 @@ export default function Kambaz() {
         description: "New Description"
     });
 
-    const addNewCourse = () => {
+    const handleAddCourse = () => {
         if (!isFaculty()) return;
-        const newCourse = { ...course, _id: uuidv4() };
-        setCourses([...coursesList, newCourse]);
+        dispatch(addCourse(course));
     };
 
-    const deleteCourse = (courseId: string) => {
+    const hancleDeleteCourse = (courseId: string) => {
         if (!isFaculty()) return;
-        setCourses(coursesList.filter((course) => course._id !== courseId));
+        dispatch(deleteCourse(courseId));
     };
 
-    const updateCourse = () => {
+    const handleUpdateCourse = () => {
         if (!isFaculty()) return;
-        setCourses(
-            coursesList.map((c) => {
-                if (c._id === course._id) {
-                    return course;
-                } else {
-                    return c;
-                }
-            })
-        );
+        dispatch(updateCourse(course));
     };
 
     return (
@@ -61,9 +53,9 @@ export default function Kambaz() {
                                 courses={coursesList}
                                 course={course}
                                 setCourse={setCourse}
-                                addNewCourse={addNewCourse}
-                                deleteCourse={deleteCourse}
-                                updateCourse={updateCourse}
+                                addNewCourse={handleAddCourse}
+                                deleteCourse={hancleDeleteCourse}
+                                updateCourse={handleUpdateCourse}
                                 isFaculty={isFaculty}
                             />
                         </ProtectedRoute>
