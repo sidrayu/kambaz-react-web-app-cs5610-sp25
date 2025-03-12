@@ -36,14 +36,18 @@ export default function Assignments() {
                                     <div className="d-flex justify-content-between align-items-center">
                                         <div className="d-flex align-items-center">
                                             <BsGripVertical className="me-2 fs-3" />
-                                            <MdOutlineEditNote className="me-2" style={{ color: 'green' }} />
+                                            
                                             <div>
-                                                <Link 
-                                                    id="wd-task-link"
-                                                    to={`/Kambaz/Courses/${cid}/Assignments/Editor/${assignment._id}`}
-                                                    style={{ textDecoration: 'none' }}
-                                                >
-                                                    <strong style={{ 
+                                                { isFaculty() && (
+                                                    <Link 
+                                                        id="wd-task-link"
+                                                        to={`/Kambaz/Courses/${cid}/Assignments/Editor/${assignment._id}`}
+                                                        style={{ textDecoration: 'none' }}
+                                                    >
+                                                        <MdOutlineEditNote className="me-2" style={{ color: 'green' }} />
+                                                    </Link>
+                                                )}
+                                                <strong style={{ 
                                                         fontSize: '24px', 
                                                         color: "black", 
                                                         marginBottom: '0', 
@@ -52,7 +56,6 @@ export default function Assignments() {
                                                     }}>
                                                         {assignment.title}
                                                     </strong>
-                                                </Link>
                                                 <span style={{ 
                                                     fontSize: '20px', 
                                                     color: '#555', 
