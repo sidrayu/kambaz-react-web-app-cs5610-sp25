@@ -8,6 +8,7 @@ import { ListGroup, Container } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import { deleteAssignment } from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
+import { useUserRole } from "../../hooks/useUserRole";
 
 
 export default function Assignments() {
@@ -17,11 +18,11 @@ export default function Assignments() {
         (assignment: { courseId: string | undefined; }) => assignment.courseId === cid
     );
     const dispatch = useDispatch();
-
+    const { isFaculty } = useUserRole();
     return (
         <Container>
             <div>
-                <AssignmentsControls /><br /><br /><br /><br />
+                <AssignmentsControls isFaculty={() => isFaculty()} /><br /><br /><br /><br />
                 <ListGroup className="rounded-0" id="wd-assignments">
                     <ListGroup.Item className="wd-assignments p-0 mb-5 fs-3 border-gray">
                         <div className="wd-title p-4 ps-2 bg-secondary">
@@ -71,6 +72,7 @@ export default function Assignments() {
                                             <TaskControlButtons 
                                                 assignmentId={assignment._id}
                                                 deleteAssignment={(assignmentId: any) => dispatch(deleteAssignment(assignmentId))}
+                                                isFaculty={() => isFaculty()}
                                             />
                                         </div>
                                     </div>

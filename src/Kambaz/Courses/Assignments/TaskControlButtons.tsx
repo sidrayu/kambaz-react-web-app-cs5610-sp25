@@ -6,7 +6,12 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 export default function TaskControlButtons(
-  { assignmentId, deleteAssignment } : { assignmentId: string, deleteAssignment: Function }) {
+  { assignmentId, deleteAssignment, isFaculty }: {
+    assignmentId: string,
+    deleteAssignment: Function,
+    isFaculty: () => boolean
+  }
+) {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   const handleShowDialog = () => {
@@ -27,10 +32,12 @@ export default function TaskControlButtons(
   return (
     <div className="float-end">
       <GreenCheckmark />
-      <FaTrash 
-        className="text-danger me-2 mb-1"
-        onClick={handleShowDialog}
-      />
+      {isFaculty() && (
+        <FaTrash 
+          className="text-danger me-2 mb-1"
+          onClick={handleShowDialog}
+        />
+      )}
       <IoEllipsisVertical className="fs-4" />
 
       {/* Confirmation Dialog */}

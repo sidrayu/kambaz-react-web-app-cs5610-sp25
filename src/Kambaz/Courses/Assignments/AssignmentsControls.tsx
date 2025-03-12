@@ -4,23 +4,26 @@ import { BiSearch } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router";
 
-export default function AssignmentsControls() {
+export default function AssignmentsControls({isFaculty}: {isFaculty: () => boolean}) {
   const navigate = useNavigate();
   const { cid } = useParams();
   const assignmentId = "AddNewAssignment";
   
   return (
     <div id="wd-modules-controls" className="text-nowrap">
-      <Button 
-        variant="danger" 
-        size="lg" 
-        className="me-1 float-end" 
-        id="wd-add-module-btn"
-        onClick={() => navigate(`/Kambaz/Courses/${cid}/Assignments/Editor/${assignmentId}`)}
-      >
-        <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
-        Assigment
-      </Button>
+      
+      {isFaculty() && (
+        <Button 
+          variant="danger" 
+          size="lg" 
+          className="me-1 float-end" 
+          id="wd-add-module-btn"
+          onClick={() => navigate(`/Kambaz/Courses/${cid}/Assignments/Editor/${assignmentId}`)}
+        >
+          <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
+          Assigment
+        </Button>
+      )}
       <Button variant="secondary" size="lg" className="me-1 float-end" id="wd-view-progress">
         <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
         Group
