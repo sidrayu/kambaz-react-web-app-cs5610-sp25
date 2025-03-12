@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { Button, Card, FormControl } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import * as db from "./Database";
-
+import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import { enrollCourse, unenrollCourse } from "./Enrollment/reducer";
 
 export default function Dashboard(
     { courses, course, setCourse, addNewCourse,
@@ -12,7 +12,17 @@ export default function Dashboard(
             updateCourse: () => void; isFaculty: () => boolean;
         }) {
     const { currentUser } = useSelector((state: any) => state.accountReducer);
-    const { enrollments } = db;
+    const enrollments = useSelector((state: any) => state.enrollmentReducer.enrollments);
+    const dispatch = useDispatch();
+    const [showAll, setShowAll] = useState(false);
+
+    const toggleShowAll = () => setShowAll(!showAll);
+
+    const displayedCourses = showAll || isFaculty()
+        ? courses
+        : courses.filter(c =>
+            enrollments.some(e => e.user === currentUser._id && e.course === c._id)
+        );
 
     return (
         <div className="p-4" id="wd-dashboard">
@@ -70,56 +80,64 @@ export default function Dashboard(
                 </>
             )}
             <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2> <hr />
+            {currentUser?.role === "STUDENT" && (
+                <button className="btn btn-primary float-end" onClick={toggleShowAll}>
+                    Enrollments
+                </button>
+            )}
             <div className="row" id="wd-dashboard-courses">
                 <div className="row row-cols-1 row-cols-md-5 g-4">
-                    {courses.filter((course) =>
-                        enrollments.some(
-                            (enrollment) =>
-                                isFaculty() 
-                                ? true 
-                                : (enrollment.user === currentUser._id &&
-                                enrollment.course === course._id)
-                        ))
-                        .map((course) => (
-                            <div key={course._id} className="col" style={{ width: "300px" }}>
-                                <Card>
-                                    <Card.Img src={course.image || "/images/reactjs.jpg"}
-                                        variant="top"
-                                        width="100%"
-                                        height={160} />
-                                    <Card.Body>
-                                        <Card.Title className="text-nowrap overflow-hidden">
-                                            {course.name}
-                                        </Card.Title>
-                                        <Card.Text className="overflow-hidden"
-                                            style={{ height: "100px" }}>
-                                            {course.description}
-                                        </Card.Text>
-                                        <Link to={`/Kambaz/Courses/${course._id}/Home`}
-                                            className="btn btn-primary me-2">
-                                            Go
-                                        </Link>
-                                        {isFaculty() && (
-                                            <>
-                                                <Button
-                                                    variant="warning"
-                                                    id="wd-edit-course-click"
-                                                    className="me-2"
-                                                    onClick={() => setCourse(course)}>
-                                                    Edit
-                                                </Button>
-                                                <Button
-                                                    variant="danger"
-                                                    id="wd-delete-course-click"
-                                                    onClick={() => deleteCourse(course._id)}>
-                                                    Delete
-                                                </Button>
-                                            </>
-                                        )}
-                                    </Card.Body>
-                                </Card>
-                            </div>
-                        ))}
+                    {displayedCourses.map((course) => (
+                        <div key={course._id} className="col" style={{ width: "300px" }}>
+                            <Card>
+                                <Card.Img src={course.image || "/images/reactjs.jpg"}
+                                    variant="top"
+                                    width="100%"
+                                    height={160} />
+                                <Card.Body>
+                                    <Card.Title className="text-nowrap overflow-hidden">
+                                        {course.name}
+                                    </Card.Title>
+                                    <Card.Text className="overflow-hidden"
+                                        style={{ height: "100px" }}>
+                                        {course.description}
+                                    </Card.Text>
+                                    <Link to={`/Kambaz/Courses/${course._id}/Home`}
+                                        className="btn btn-primary me-2">
+                                        Go
+                                    </Link>
+                                    {isFaculty() && (
+                                        <>
+                                            <Button
+                                                variant="warning"
+                                                id="wd-edit-course-click"
+                                                className="me-2"
+                                                onClick={() => setCourse(course)}>
+                                                Edit
+                                            </Button>
+                                            <Button
+                                                variant="danger"
+                                                id="wd-delete-course-click"
+                                                onClick={() => deleteCourse(course._id)}>
+                                                Delete
+                                            </Button>
+                                        </>
+                                    )}
+                                    {currentUser?.role === "STUDENT" && (
+                                        enrollments.some(e => e.user === currentUser._id && e.course === course._id)
+                                            ? <Button variant="danger"
+                                                onClick={() => dispatch(unenrollCourse({ userId: currentUser._id, courseId: course._id }))}>
+                                                Unenroll
+                                            </Button>
+                                            : <Button variant="success"
+                                                onClick={() => dispatch(enrollCourse({ userId: currentUser._id, courseId: course._id }))}>
+                                                Enroll
+                                            </Button>
+                                    )}
+                                </Card.Body>
+                            </Card>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>
