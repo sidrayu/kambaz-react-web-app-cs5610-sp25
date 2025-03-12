@@ -5,7 +5,6 @@ import { useState } from "react";
 
 export default function AssignmentEditor() {
     const { cid, assignmentId } = useParams();
-    console.log(cid, assignmentId);
     
     const navigate = useNavigate();
     
@@ -24,7 +23,6 @@ export default function AssignmentEditor() {
     const [availableUtilDate, setAvailableUntil] = useState(existingAssignment?.availableUtilDate || "");
 
     // If editing and assignment not found
-    console.log("existingAssignment", existingAssignment);
     if (assignmentId != "AddNewAssignment" && !existingAssignment) {  
         return <div>Assignment not found</div>;
     }

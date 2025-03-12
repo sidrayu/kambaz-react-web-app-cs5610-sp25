@@ -6,15 +6,17 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { MdOutlineEditNote } from "react-icons/md";
 import { ListGroup, Container } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
-import { assignments } from "../../Database";
+import { deleteAssignment } from "./reducer";
+import { useSelector, useDispatch } from "react-redux";
 
 
 export default function Assignments() {
     const { cid } = useParams();
-    
+    const { assignments } = useSelector((state: any) => state.assignmentsReducer);
     const courseAssignments = assignments.filter(
-        assignment => assignment.courseId === cid
+        (assignment: { courseId: string | undefined; }) => assignment.courseId === cid
     );
+    const dispatch = useDispatch();
 
     return (
         <Container>
@@ -66,7 +68,10 @@ export default function Assignments() {
                                             </div>
                                         </div>
                                         <div className="d-flex align-items-center task-control-container">
-                                            <TaskControlButtons />
+                                            <TaskControlButtons 
+                                                assignmentId={assignment._id}
+                                                deleteAssignment={(assignmentId: any) => dispatch(deleteAssignment(assignmentId))}
+                                            />
                                         </div>
                                     </div>
                                 </ListGroup.Item>
