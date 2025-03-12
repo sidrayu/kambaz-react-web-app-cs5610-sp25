@@ -36,35 +36,33 @@ export default function Assignments() {
                                     <div className="d-flex justify-content-between align-items-center">
                                         <div className="d-flex align-items-center">
                                             <BsGripVertical className="me-2 fs-3" />
-                                            
+
                                             <div>
-                                                { isFaculty() && (
-                                                    <Link 
+                                                {isFaculty() && (
+                                                    <Link
                                                         id="wd-task-link"
                                                         to={`/Kambaz/Courses/${cid}/Assignments/Editor/${assignment._id}`}
                                                         style={{ textDecoration: 'none' }}
                                                     >
                                                         <MdOutlineEditNote className="me-2" style={{ color: 'green' }} />
+                                                        <strong style={{
+                                                            fontSize: '24px',
+                                                            color: "black",
+                                                            marginBottom: '0',
+                                                            display: 'block',
+                                                            lineHeight: '1'
+                                                        }}>
+                                                            {assignment.title}
+                                                        </strong>
                                                     </Link>
                                                 )}
-                                                <strong style={{ 
-                                                        fontSize: '24px', 
-                                                        color: "black", 
-                                                        marginBottom: '0', 
-                                                        display: 'block', 
-                                                        lineHeight: '1' 
-                                                    }}>
-                                                        {assignment.title}
-                                                    </strong>
-                                                <span style={{ 
-                                                    fontSize: '20px', 
-                                                    color: '#555', 
-                                                    marginTop: '0', 
-                                                    lineHeight: '1' 
+                                                <span style={{
+                                                    fontSize: '20px',
+                                                    color: '#555',
+                                                    marginTop: '0',
+                                                    lineHeight: '1'
                                                 }}>
-                                                    <span style={{ color: 'red', fontWeight: 'bold' }}>
-                                                        {assignment.modules}
-                                                    </span> | Not available until {new Date(assignment.availableFromDate).toLocaleDateString()} at {new Date(assignment.availableFromDate).toLocaleTimeString()}  |
+                                                    Not available until {new Date(assignment.availableFromDate).toLocaleDateString()} at {new Date(assignment.availableFromDate).toLocaleTimeString()}  |
                                                     Not available until {new Date(assignment.availableUtilDate).toLocaleDateString()} at {new Date(assignment.availableUtilDate).toLocaleTimeString()} |
                                                     <strong> Due </strong> {new Date(assignment.dueDate).toLocaleDateString()} at {new Date(assignment.dueDate).toLocaleTimeString()} |
                                                     {assignment.points} pts
@@ -72,7 +70,7 @@ export default function Assignments() {
                                             </div>
                                         </div>
                                         <div className="d-flex align-items-center task-control-container">
-                                            <TaskControlButtons 
+                                            <TaskControlButtons
                                                 assignmentId={assignment._id}
                                                 deleteAssignment={(assignmentId: any) => dispatch(deleteAssignment(assignmentId))}
                                                 isFaculty={() => isFaculty()}
