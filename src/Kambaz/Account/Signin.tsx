@@ -20,25 +20,29 @@ export default function Signin() {
   return (
     <div id="wd-signin-screen">
       <h1>Sign in</h1>
-      <FormControl 
-        defaultValue={credentials.username}
-        onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
-        className="mb-2"
-        placeholder="username"
-        id="wd-username" />
-      <FormControl 
-        defaultValue={credentials.password}
-        onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
-        className="mb-2"
-        placeholder="password"
-        type="password"
-        id="wd-password" />
-      <Button 
-        onClick={signin}
-        id="wd-signin-btn"
-        className="w-100">
-        Sign in
-      </Button>
+      <Form>
+        <FormControl 
+          defaultValue={credentials.username}
+          onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
+          className="mb-2"
+          placeholder="username"
+          id="wd-username"
+          autoComplete="username" />
+        <FormControl 
+          defaultValue={credentials.password}
+          onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
+          className="mb-2"
+          placeholder="password"
+          type="password"
+          id="wd-password"
+          autoComplete="current-password" />
+        <Button 
+          onClick={signin}
+          id="wd-signin-btn"
+          className="w-100">
+          Sign in
+        </Button>
+      </Form>
       <Link id="wd-signup-link" to="/Kambaz/Account/Signup">
         Sign up
       </Link>
