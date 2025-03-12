@@ -36,7 +36,6 @@ export default function Assignments() {
                                     <div className="d-flex justify-content-between align-items-center">
                                         <div className="d-flex align-items-center">
                                             <BsGripVertical className="me-2 fs-3" />
-
                                             <div>
                                                 {isFaculty() && (
                                                     <Link
@@ -44,7 +43,6 @@ export default function Assignments() {
                                                         to={`/Kambaz/Courses/${cid}/Assignments/Editor/${assignment._id}`}
                                                         style={{ textDecoration: 'none' }}
                                                     >
-                                                        <MdOutlineEditNote className="me-2" style={{ color: 'green' }} />
                                                         <strong style={{
                                                             fontSize: '24px',
                                                             color: "black",
@@ -56,13 +54,29 @@ export default function Assignments() {
                                                         </strong>
                                                     </Link>
                                                 )}
+                                                {!isFaculty() && (
+                                                    <strong
+                                                        style={{
+                                                            fontSize: '24px',
+                                                            color: "black",
+                                                            marginBottom: '0',
+                                                            display: 'block',
+                                                            lineHeight: '1'
+                                                        }}
+                                                    >
+                                                        {assignment.title}
+                                                    </strong>
+                                                )}
+
                                                 <span style={{
                                                     fontSize: '20px',
                                                     color: '#555',
                                                     marginTop: '0',
                                                     lineHeight: '1'
                                                 }}>
-                                                    Not available until {new Date(assignment.availableFromDate).toLocaleDateString()} at {new Date(assignment.availableFromDate).toLocaleTimeString()}  |
+                                                    <span style={{ color: 'red', fontWeight: 'bold' }}>
+                                                        {assignment.modules}
+                                                    </span> | Not available until {new Date(assignment.availableFromDate).toLocaleDateString()} at {new Date(assignment.availableFromDate).toLocaleTimeString()}  |
                                                     Not available until {new Date(assignment.availableUtilDate).toLocaleDateString()} at {new Date(assignment.availableUtilDate).toLocaleTimeString()} |
                                                     <strong> Due </strong> {new Date(assignment.dueDate).toLocaleDateString()} at {new Date(assignment.dueDate).toLocaleTimeString()} |
                                                     {assignment.points} pts
