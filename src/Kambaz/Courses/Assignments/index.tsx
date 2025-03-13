@@ -3,7 +3,6 @@ import { BsGripVertical } from "react-icons/bs";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import TaskControlButtons from "./TaskControlButtons";
 import { IoMdArrowDropdown } from "react-icons/io";
-import { MdOutlineEditNote } from "react-icons/md";
 import { ListGroup, Container } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import { deleteAssignment } from "./reducer";
