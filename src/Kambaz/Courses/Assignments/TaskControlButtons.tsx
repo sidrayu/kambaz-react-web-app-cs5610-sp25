@@ -4,9 +4,12 @@ import GreenCheckmark from "./GreenCheckmark";
 import { FaTrash } from "react-icons/fa";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { MdOutlineEditNote } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 export default function TaskControlButtons(
-  { assignmentId, deleteAssignment, isFaculty }: {
+  { courseId, assignmentId, deleteAssignment, isFaculty }: {
+    courseId: string,
     assignmentId: string,
     deleteAssignment: Function,
     isFaculty: () => boolean
@@ -33,6 +36,11 @@ export default function TaskControlButtons(
     <div className="float-end">
       <GreenCheckmark />
       {isFaculty() && (
+        <Link to={`/Kambaz/Courses/${courseId}/Assignments/Editor/${assignmentId}`}>
+          <MdOutlineEditNote className="text-primary me-2 mb-1" />
+        </Link>
+      )}
+      {isFaculty() && (
         <FaTrash 
           className="text-danger me-2 mb-1"
           onClick={handleShowDialog}
@@ -40,7 +48,6 @@ export default function TaskControlButtons(
       )}
       <IoEllipsisVertical className="fs-4" />
 
-      {/* Confirmation Dialog */}
       <Modal show={showConfirmDialog} onHide={handleCloseDialog}>
         <Modal.Header closeButton>
           <Modal.Title>Confirm Deletion</Modal.Title>

@@ -6,7 +6,7 @@ import ProtectedRoute from "./Account/ProtectedRoute";
 import Dashboard from "./Dashboard";
 import KambazNavigation from "./Navigation";
 import Courses from "./Courses";
-import { addCourse, deleteCourse, updateCourse, setCourses } from "./Courses/reducer";
+import { addCourse, deleteCourse, updateCourse } from "./Courses/reducer";
 import { useState } from "react";
 import "./styles.css";
 

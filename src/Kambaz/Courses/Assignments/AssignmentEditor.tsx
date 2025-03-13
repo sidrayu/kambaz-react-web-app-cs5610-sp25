@@ -17,12 +17,12 @@ export default function AssignmentEditor({isFaculty}: {isFaculty: () => boolean}
     
     // Find existing assignment or create empty template for new assignment
     const existingAssignment = assignmentId 
-        ? assignments.find(a => a.courseId === cid && a._id === assignmentId)
+        ? assignments.find((a: any) => a.courseId === cid && a._id === assignmentId)
         : null;
     
     // Initialize state with existing values or defaults for new assignment 
     const [title, setTitle] = useState(existingAssignment?.title || "");
-    const [modules, setModules] = useState(existingAssignment?.modules || "Module 1");
+    // const [modules, setModules] = useState(existingAssignment?.modules || "Module 1");
     const [description, setDescription] = useState(existingAssignment?.description || "");
     const [points, setPoints] = useState(existingAssignment?.points || 0);
     const [dueDate, setDueDate] = useState(existingAssignment?.dueDate || "2025/01/01");
@@ -71,7 +71,7 @@ export default function AssignmentEditor({isFaculty}: {isFaculty: () => boolean}
             _id: existingAssignment?._id || '',
             courseId: cid || "",
             title,
-            modules,
+            // modules,
             availableFromDate,
             availableUtilDate,
             dueDate,

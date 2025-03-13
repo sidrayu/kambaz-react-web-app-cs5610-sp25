@@ -31,7 +31,7 @@ export default function Assignments() {
                         </div>
 
                         <ListGroup className="wd-assignments rounded-0">
-                            {courseAssignments.map(assignment => (
+                            {courseAssignments.map((assignment: any) => (
                                 <ListGroup.Item key={assignment._id} className="wd-task p-3 ps-1">
                                     <div className="d-flex justify-content-between align-items-center">
                                         <div className="d-flex align-items-center">
@@ -74,9 +74,7 @@ export default function Assignments() {
                                                     marginTop: '0',
                                                     lineHeight: '1'
                                                 }}>
-                                                    <span style={{ color: 'red', fontWeight: 'bold' }}>
-                                                        {assignment.modules}
-                                                    </span> | Not available until {new Date(assignment.availableFromDate).toLocaleDateString()} at {new Date(assignment.availableFromDate).toLocaleTimeString()}  |
+                                                    Not available until {new Date(assignment.availableFromDate).toLocaleDateString()} at {new Date(assignment.availableFromDate).toLocaleTimeString()}  |
                                                     Not available until {new Date(assignment.availableUtilDate).toLocaleDateString()} at {new Date(assignment.availableUtilDate).toLocaleTimeString()} |
                                                     <strong> Due </strong> {new Date(assignment.dueDate).toLocaleDateString()} at {new Date(assignment.dueDate).toLocaleTimeString()} |
                                                     {assignment.points} pts
@@ -85,6 +83,7 @@ export default function Assignments() {
                                         </div>
                                         <div className="d-flex align-items-center task-control-container">
                                             <TaskControlButtons
+                                                courseId={cid || ""}
                                                 assignmentId={assignment._id}
                                                 deleteAssignment={(assignmentId: any) => dispatch(deleteAssignment(assignmentId))}
                                                 isFaculty={() => isFaculty()}

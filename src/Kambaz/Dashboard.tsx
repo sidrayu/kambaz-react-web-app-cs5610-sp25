@@ -21,7 +21,7 @@ export default function Dashboard(
     const displayedCourses = showAll || isFaculty()
         ? courses
         : courses.filter(c =>
-            enrollments.some(e => e.user === currentUser._id && e.course === c._id)
+            enrollments.some((e: any) => e.user === currentUser._id && e.course === c._id)
         );
 
     return (
@@ -124,7 +124,7 @@ export default function Dashboard(
                                         </>
                                     )}
                                     {!isFaculty() && (
-                                        enrollments.some(e => e.user === currentUser._id && e.course === course._id)
+                                        enrollments.some((e: any) => e.user === currentUser._id && e.course === course._id)
                                             ? <Button variant="danger"
                                                 onClick={() => dispatch(unenrollCourse({ userId: currentUser._id, courseId: course._id }))}>
                                                 Unenroll
