@@ -9,7 +9,7 @@ import Courses from "./Courses";
 import { addCourse, deleteCourse, updateCourse } from "./Courses/reducer";
 import { useState } from "react";
 import "./styles.css";
-
+import Session from "./Account/Session";
 export default function Kambaz() {
     const coursesList = useSelector((state: any) => state.coursesReducer.courses);
     const dispatch = useDispatch();
@@ -41,6 +41,8 @@ export default function Kambaz() {
     };
 
     return (
+        <Session>
+
         <div id="wd-kambaz">
             <KambazNavigation />
             <div className="wd-main-content-offset p-3">
@@ -71,5 +73,6 @@ export default function Kambaz() {
                 </Routes>
             </div>
         </div>
+        </Session>
     );
 }
