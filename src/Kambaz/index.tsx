@@ -7,15 +7,16 @@ import Dashboard from "./Dashboard";
 import KambazNavigation from "./Navigation";
 import Courses from "./Courses";
 import { addCourse, deleteCourse, updateCourse } from "./Courses/reducer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./styles.css";
 import Session from "./Account/Session";
+import * as userClient from "./Account/client";
 export default function Kambaz() {
     const coursesList = useSelector((state: any) => state.coursesReducer.courses);
     const dispatch = useDispatch();
     const { isFaculty } = useUserRole();
 
-    const [course, setCourse] = useState<any>({
+    const [course, setCourses] = useState<any>({
         _id: "0",
         name: "New Course",
         number: "New Number",
@@ -24,7 +25,19 @@ export default function Kambaz() {
         image: "/images/reactjs.jpg",
         description: "New Description"
     });
-
+    const { currentUser } = useSelector((state: any) => state.accountReducer);
+    const fetchCourses = async () => {
+      try {
+        const courses = await userClient.findMyCourses();
+        setCourses(courses);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    useEffect(() => {
+      fetchCourses();
+    }, [currentUser]);
+  
     const handleAddCourse = () => {
         if (!isFaculty()) return;
         dispatch(addCourse(course));
@@ -54,7 +67,7 @@ export default function Kambaz() {
                             <Dashboard
                                 courses={coursesList}
                                 course={course}
-                                setCourse={setCourse}
+                                setCourse={setCourses}
                                 addNewCourse={handleAddCourse}
                                 deleteCourse={hancleDeleteCourse}
                                 updateCourse={handleUpdateCourse}

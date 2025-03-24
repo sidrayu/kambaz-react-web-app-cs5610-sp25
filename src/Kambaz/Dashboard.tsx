@@ -12,7 +12,7 @@ export default function Dashboard(
             updateCourse: () => void; isFaculty: () => boolean;
         }) {
     const { currentUser } = useSelector((state: any) => state.accountReducer);
-    const enrollments = useSelector((state: any) => state.enrollmentReducer.enrollments);
+    // const enrollments = useSelector((state: any) => state.enrollmentReducer.enrollments);
     const dispatch = useDispatch();
     const [showAll, setShowAll] = useState(false);
 
@@ -20,9 +20,10 @@ export default function Dashboard(
 
     const displayedCourses = showAll || isFaculty()
         ? courses
-        : courses.filter(c =>
-            enrollments.some((e: any) => e.user === currentUser._id && e.course === c._id)
-        );
+        : courses;
+        // : courses.filter(c =>
+        //     enrollments.some((e: any) => e.user === currentUser._id && e.course === c._id)
+        // );
 
     return (
         <div className="p-4" id="wd-dashboard">
@@ -123,7 +124,7 @@ export default function Dashboard(
                                             </Button>
                                         </>
                                     )}
-                                    {!isFaculty() && (
+                                    {/* {!isFaculty() && (
                                         enrollments.some((e: any) => e.user === currentUser._id && e.course === course._id)
                                             ? <Button variant="danger"
                                                 onClick={() => dispatch(unenrollCourse({ userId: currentUser._id, courseId: course._id }))}>
@@ -133,7 +134,7 @@ export default function Dashboard(
                                                 onClick={() => dispatch(enrollCourse({ userId: currentUser._id, courseId: course._id }))}>
                                                 Enroll
                                             </Button>
-                                    )}
+                                    )} */}
                                 </Card.Body>
                             </Card>
                         </div>
