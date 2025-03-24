@@ -12,11 +12,11 @@ import "./styles.css";
 import Session from "./Account/Session";
 import * as userClient from "./Account/client";
 export default function Kambaz() {
-    const coursesList = useSelector((state: any) => state.coursesReducer.courses);
-    const dispatch = useDispatch();
+    // const coursesList = useSelector((state: any) => state.coursesReducer.courses);
+    const dispatch = useDispatch<any>();
     const { isFaculty } = useUserRole();
 
-    const [course, setCourses] = useState<any>({
+    const [course, setCourse] = useState<any>({
         _id: "0",
         name: "New Course",
         number: "New Number",
@@ -26,6 +26,8 @@ export default function Kambaz() {
         description: "New Description"
     });
     const { currentUser } = useSelector((state: any) => state.accountReducer);
+
+    const [courses, setCourses] = useState<any[]>([]);
     const fetchCourses = async () => {
       try {
         const courses = await userClient.findMyCourses();
@@ -38,7 +40,7 @@ export default function Kambaz() {
       fetchCourses();
     }, [currentUser]);
   
-    const handleAddCourse = () => {
+    const handleAddCourse = async () => {
         if (!isFaculty()) return;
         dispatch(addCourse(course));
     };
@@ -65,9 +67,9 @@ export default function Kambaz() {
                     <Route path="/Dashboard" element={
                         <ProtectedRoute>
                             <Dashboard
-                                courses={coursesList}
+                                courses={courses}
                                 course={course}
-                                setCourse={setCourses}
+                                setCourse={setCourse}
                                 addNewCourse={handleAddCourse}
                                 deleteCourse={hancleDeleteCourse}
                                 updateCourse={handleUpdateCourse}
@@ -77,7 +79,7 @@ export default function Kambaz() {
                     } />
                     <Route path="/Courses/:cid/*" element={
                         <Courses 
-                            courses={coursesList}
+                            courses={courses}
                             isFaculty={isFaculty} 
                         />
                     } />

@@ -11,9 +11,9 @@ export default function Dashboard(
             addNewCourse: () => void; deleteCourse: (courseId: string) => void;
             updateCourse: () => void; isFaculty: () => boolean;
         }) {
-    const { currentUser } = useSelector((state: any) => state.accountReducer);
+    // const { currentUser } = useSelector((state: any) => state.accountReducer);
     // const enrollments = useSelector((state: any) => state.enrollmentReducer.enrollments);
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const [showAll, setShowAll] = useState(false);
 
     const toggleShowAll = () => setShowAll(!showAll);

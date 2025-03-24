@@ -1,7 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { courses } from "../Database";
-import { v4 as uuidv4 } from "uuid";
+import * as userClient from "../Account/client";
 
+export const addCourse = createAsyncThunk(
+  "courses/addCourse",
+  async (course: any) => {
+    return await userClient.createCourse(course);
+  }
+);
 
 const initialState = {
   courses: courses,
@@ -14,20 +20,11 @@ const coursesSlice = createSlice({
     setCourses: (state, { payload }) => {
       state.courses = payload;
     },
-    addCourse: (state, { payload: course }) => {
-        const newCourse: any = {
-            _id: uuidv4(),
-            lessons: [],
-            name: course.name,
-            number: course.number,
-            startDate: course.startDate,
-            endDate: course.endDate,
-            department: course.department,
-            credits: course.credits,
-            description: course.description,
-        };
-        state.courses = [...state.courses, newCourse] as any;
-    },
+    // remove or comment out the old addCourse
+    // addCourse: (state, { payload: course }) => {
+    //     const newCourse = await userClient.createCourse(course);
+    //     state.courses = [...state.courses, newCourse] as any;
+    // },
     deleteCourse: (state, { payload: courseId }) => {
       state.courses = state.courses.filter(
         (c: any) => c._id !== courseId);
@@ -38,8 +35,13 @@ const coursesSlice = createSlice({
       );
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(addCourse.fulfilled, (state, { payload }) => {
+      state.courses.push(payload);
+    });
+  },
 });
 
-export const { setCourses, addCourse, deleteCourse, updateCourse } =
+export const { setCourses, deleteCourse, updateCourse } =
   coursesSlice.actions;
 export default coursesSlice.reducer;
