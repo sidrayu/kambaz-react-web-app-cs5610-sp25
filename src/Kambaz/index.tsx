@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import "./styles.css";
 import Session from "./Account/Session";
 import * as userClient from "./Account/client";
+
 export default function Kambaz() {
     // const coursesList = useSelector((state: any) => state.coursesReducer.courses);
     const dispatch = useDispatch<any>();
@@ -42,17 +43,20 @@ export default function Kambaz() {
   
     const handleAddCourse = async () => {
         if (!isFaculty()) return;
-        dispatch(addCourse(course));
+        await dispatch(addCourse(course));
+        await fetchCourses();
     };
 
-    const hancleDeleteCourse = (courseId: string) => {
+    const hancleDeleteCourse = async (courseId: string) => {
         if (!isFaculty()) return;
-        dispatch(deleteCourse(courseId));
+        await dispatch(deleteCourse(courseId));
+        await fetchCourses();
     };
 
-    const handleUpdateCourse = () => {
+    const handleUpdateCourse = async () => {
         if (!isFaculty()) return;
-        dispatch(updateCourse(course));
+        await dispatch(updateCourse(course));
+        await fetchCourses();
     };
 
     return (

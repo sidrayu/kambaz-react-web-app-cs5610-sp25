@@ -1,9 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button, Card, FormControl } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import { enrollCourse, unenrollCourse } from "./Enrollment/reducer";
-
 export default function Dashboard(
     { courses, course, setCourse, addNewCourse,
         deleteCourse, updateCourse, isFaculty }: {
