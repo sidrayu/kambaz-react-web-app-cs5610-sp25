@@ -4,10 +4,11 @@ import { BsGripVertical } from 'react-icons/bs';
 import ModuleControlButtons from './ModuleControlButtons';
 import LessonControlButtons from './LessonControlButtons';
 import { useParams } from "react-router";
-import { useState } from "react";
-import { addModule, editModule, updateModule, deleteModule } from "./reducer";
+import { useState, useEffect } from "react";
+import { setModules, addModule, editModule, updateModule, deleteModule } from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
 import { useUserRole } from "../../hooks/useUserRole";
+import * as coursesClient from "../client";
 
 export default function Modules() {
   const { isFaculty } = useUserRole();
@@ -15,6 +16,13 @@ export default function Modules() {
   const [moduleName, setModuleName] = useState("");
   const { modules } = useSelector((state: any) => state.modulesReducer);
   const dispatch = useDispatch();
+  const fetchModules = async () => {
+    const modules = await coursesClient.findModulesForCourse(cid as string);
+    dispatch(setModules(modules));
+  };
+  useEffect(() => {
+    fetchModules();
+  }, []);
 
   return (
     <Container>
@@ -31,7 +39,7 @@ export default function Modules() {
         <br /><br /><br /><br />
         <ListGroup className="rounded-0" id="wd-modules">
           {modules
-            .filter((module: any) => module.course === cid)
+            //.filter((module: any) => module.course === cid)
             .map((module: any) => (
               <ListGroup.Item key={module._id} className="wd-module p-0 mb-5 fs-5 border-gray">
                 <div className="wd-title p-3 ps-2 bg-secondary">
