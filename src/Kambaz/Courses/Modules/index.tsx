@@ -9,6 +9,7 @@ import { setModules, addModule, editModule, updateModule, deleteModule } from ".
 import { useSelector, useDispatch } from "react-redux";
 import { useUserRole } from "../../hooks/useUserRole";
 import * as coursesClient from "../client";
+import * as modulesClient from "./client";
 
 export default function Modules() {
   const { isFaculty } = useUserRole();
@@ -28,6 +29,10 @@ export default function Modules() {
     const newModule = { name: moduleName, course: cid };
     const module = await coursesClient.createModuleForCourse(cid, newModule);
     dispatch(addModule(module));
+  };
+  const removeModule = async (moduleId: string) => {
+    await modulesClient.deleteModule(moduleId);
+    dispatch(deleteModule(moduleId));
   };
 
   return (
@@ -70,7 +75,8 @@ export default function Modules() {
                   )}
                   <ModuleControlButtons
                     moduleId={module._id}
-                    deleteModule={(moduleId) => dispatch(deleteModule(moduleId))}
+                    deleteModule={(moduleId) => removeModule(moduleId)}
+
                     editModule={(moduleId) => dispatch(editModule(moduleId))}
                     isFaculty={isFaculty}
                   />
