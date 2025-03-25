@@ -23,6 +23,12 @@ export default function Modules() {
   useEffect(() => {
     fetchModules();
   }, []);
+  const createModuleForCourse = async () => {
+    if (!cid) return;
+    const newModule = { name: moduleName, course: cid };
+    const module = await coursesClient.createModuleForCourse(cid, newModule);
+    dispatch(addModule(module));
+  };
 
   return (
     <Container>
@@ -30,10 +36,11 @@ export default function Modules() {
         <ModulesControls 
           moduleName={moduleName}
           setModuleName={setModuleName}
-          addModule={() => {
-            dispatch(addModule({ name: moduleName, course: cid }));
-            setModuleName("");
-          }}
+          addModule={createModuleForCourse}
+          //addModule={() => {
+            //dispatch(addModule({ name: moduleName, course: cid }));
+            //setModuleName("");
+          //}}
           isFaculty={isFaculty}
         />
         <br /><br /><br /><br />
