@@ -6,8 +6,9 @@ import Assignments from "./Assignments";
 import AssignmentEditor from "./Assignments/AssignmentEditor";
 import { FaAlignJustify } from "react-icons/fa";
 import PeopleTable from "./People/Table";
+import { addAssignment, updateAssignment } from "./Assignments/reducer";
 
-export default function Courses({ courses, isFaculty }: { courses: any[]; isFaculty: () => boolean;}) {
+export default function Courses({ courses, isFaculty }: { courses: any[]; isFaculty: () => boolean; }) {
   const { cid } = useParams();
   const course = courses.find((course) => course._id === cid);
   const { pathname } = useLocation();
@@ -28,7 +29,12 @@ export default function Courses({ courses, isFaculty }: { courses: any[]; isFacu
             <Route path="Home" element={<Home />} />
             <Route path="Modules" element={<Modules />} />
             <Route path="Assignments" element={<Assignments />} />
-            <Route path="Assignments/Editor/:assignmentId" element={<AssignmentEditor isFaculty={isFaculty} />} />
+            <Route path="Assignments/Editor/:assignmentId"
+              element={<AssignmentEditor
+                isFaculty={isFaculty} 
+                addAssignment={addAssignment}
+                updateAssignment={updateAssignment} />
+              } />
             <Route path="People" element={<PeopleTable />} />
           </Routes>
         </div>

@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { courses } from "../Database";
 import * as userClient from "../Account/client";
 import * as courseClient from "../Courses/client";
 
@@ -25,7 +24,9 @@ export const updateCourse = createAsyncThunk(
 );
 
 
-const initialState = {
+const initialState: {
+  courses: any[];
+} = {
   courses: [],
 };
 

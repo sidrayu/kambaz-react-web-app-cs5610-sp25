@@ -14,6 +14,13 @@ export const addAssignment = createAsyncThunk(
   }
 );
 
+export const updateAssignment = createAsyncThunk(
+  "assignments/updateAssignment",
+  async (assignment: any) => {
+    return await courseClient.updateAssignment(assignment);
+  }
+);
+
 const initialState = {
   assignments: [],
 };
@@ -50,6 +57,6 @@ const assignmentsSlice = createSlice({
   },
 });
 
-export const {deleteAssignment, updateAssignment, setAssignments } =
+export const {deleteAssignment, setAssignments } =
   assignmentsSlice.actions;
 export default assignmentsSlice.reducer;

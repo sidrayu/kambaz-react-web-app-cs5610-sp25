@@ -24,7 +24,7 @@ export default function Assignments() {
     };
     useEffect(() => {
         fetchAssignments();
-    }, []);
+    }, [cid]);
 
     const { isFaculty } = useUserRole();
     return (

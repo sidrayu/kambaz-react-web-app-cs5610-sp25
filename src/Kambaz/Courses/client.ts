@@ -3,6 +3,14 @@ const REMOTE_SERVER = import.meta.env.VITE_REMOTE_SERVER;
 const COURSES_API = `${REMOTE_SERVER}/api/courses`;
 //const axiosWithCredentials = axios.create({ withCredentials: true });
 
+export const updateAssignment = async (assignment: any) => {
+  const response = await axios.put(
+    `${COURSES_API}/${assignment.courseId}/assignments/${assignment._id}`,
+    assignment
+  );
+  return response.data;
+};
+
 export const createAssignmentForCourse = async (
   courseId: string,
   assignment: any
