@@ -12,7 +12,7 @@ export default function AssignmentEditor({isFaculty}: {isFaculty: () => boolean}
 
     const { cid, assignmentId } = useParams();
     const { assignments } = useSelector((state: any) => state.assignmentsReducer);
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
     const navigate = useNavigate();
     
     // Find existing assignment or create empty template for new assignment
@@ -34,8 +34,8 @@ export default function AssignmentEditor({isFaculty}: {isFaculty: () => boolean}
         return <div>Assignment not found</div>;
     }
 
-    const handlAddAssignment = (assignment: any) => {
-        dispatch(
+    const handlAddAssignment = async (assignment: any) => {
+        await dispatch(
             addAssignment({
                 courseId: assignment.courseId,
                 title: assignment.title,

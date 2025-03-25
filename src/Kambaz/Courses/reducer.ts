@@ -26,7 +26,7 @@ export const updateCourse = createAsyncThunk(
 
 
 const initialState = {
-  courses: courses,
+  courses: [],
 };
 
 const coursesSlice = createSlice({
@@ -41,15 +41,15 @@ const coursesSlice = createSlice({
     //     const newCourse = await userClient.createCourse(course);
     //     state.courses = [...state.courses, newCourse] as any;
     // },
-    deleteCourse: (state, { payload: courseId }) => {
-      state.courses = state.courses.filter(
-        (c: any) => c._id !== courseId);
-    },
-    updateCourse: (state, { payload: course }) => {
-      state.courses = state.courses.map((c: any) =>
-        c._id === course._id ? course : c
-      );
-    },
+    // deleteCourse: (state, { payload: courseId }) => {
+    //   state.courses = state.courses.filter(
+    //     (c: any) => c._id !== courseId);
+    // },
+    // updateCourse: (state, { payload: course }) => {
+    //   state.courses = state.courses.map((c: any) =>
+    //     c._id === course._id ? course : c
+    //   );
+    // },
   },
   extraReducers: (builder) => {
     builder.addCase(addCourse.fulfilled, (state, { payload }) => {

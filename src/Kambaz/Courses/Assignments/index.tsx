@@ -5,23 +5,34 @@ import TaskControlButtons from "./TaskControlButtons";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { ListGroup, Container } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
-import { deleteAssignment } from "./reducer";
+import { addAssignment, deleteAssignment, setAssignments } from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
 import { useUserRole } from "../../hooks/useUserRole";
-
-
+import * as assignmentsClient from "../client";
+import { useEffect, useState } from "react";
 export default function Assignments() {
     const { cid } = useParams();
     const { assignments } = useSelector((state: any) => state.assignmentsReducer);
     const courseAssignments = assignments.filter(
         (assignment: { courseId: string | undefined; }) => assignment.courseId === cid
     );
+    
     const dispatch = useDispatch();
+    const fetchAssignments = async () => {
+        const assignments = await assignmentsClient.findAssignmentsForCourse(cid as string);
+        dispatch(setAssignments(assignments));
+    };
+    useEffect(() => {
+        fetchAssignments();
+    }, []);
+
     const { isFaculty } = useUserRole();
     return (
         <Container>
             <div>
-                <AssignmentsControls isFaculty={() => isFaculty()} /><br /><br /><br /><br />
+                <AssignmentsControls 
+                    isFaculty={() => isFaculty()} 
+                /><br /><br /><br /><br />
                 <ListGroup className="rounded-0" id="wd-assignments">
                     <ListGroup.Item className="wd-assignments p-0 mb-5 fs-3 border-gray">
                         <div className="wd-title p-4 ps-2 bg-secondary">
