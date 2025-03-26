@@ -5,11 +5,11 @@ import TaskControlButtons from "./TaskControlButtons";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { ListGroup, Container } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
-import { addAssignment, deleteAssignment, setAssignments } from "./reducer";
+import { deleteAssignment, setAssignments } from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
 import { useUserRole } from "../../hooks/useUserRole";
 import * as assignmentsClient from "../client";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 export default function Assignments() {
     const { cid } = useParams();
     const { assignments } = useSelector((state: any) => state.assignmentsReducer);
@@ -17,7 +17,12 @@ export default function Assignments() {
         (assignment: { courseId: string | undefined; }) => assignment.courseId === cid
     );
     
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
+    const removeAssignment = async (assignmentId: string) => {
+        await dispatch(deleteAssignment(assignmentId));
+        await fetchAssignments();
+    };
+
     const fetchAssignments = async () => {
         const assignments = await assignmentsClient.findAssignmentsForCourse(cid as string);
         dispatch(setAssignments(assignments));
@@ -95,7 +100,7 @@ export default function Assignments() {
                                             <TaskControlButtons
                                                 courseId={cid || ""}
                                                 assignmentId={assignment._id}
-                                                deleteAssignment={(assignmentId: any) => dispatch(deleteAssignment(assignmentId))}
+                                                deleteAssignment={(assignmentId: any) => removeAssignment(assignmentId)}
                                                 isFaculty={() => isFaculty()}
                                             />
                                         </div>

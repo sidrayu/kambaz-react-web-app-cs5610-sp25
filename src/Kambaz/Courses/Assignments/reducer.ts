@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { v4 as uuidv4 } from "uuid";
 import * as courseClient from "../client";
 
 
@@ -18,6 +17,13 @@ export const updateAssignment = createAsyncThunk(
   "assignments/updateAssignment",
   async (assignment: any) => {
     return await courseClient.updateAssignment(assignment);
+  }
+);
+
+export const deleteAssignment = createAsyncThunk(
+  "assignments/deleteAssignment",
+  async (assignmentId: string) => {
+    return await courseClient.deleteAssignment(assignmentId);
   }
 );
 
@@ -46,9 +52,9 @@ const assignmentsSlice = createSlice({
     //   };
     //   state.assignments = [...state.assignments, newAssignment] as any;
     // },
-    deleteAssignment: (state, { payload: assignmentId }) => {
-      state.assignments = state.assignments.filter((item: any) => item._id !== assignmentId);
-    },
+    // deleteAssignment: (state, { payload: assignmentId }) => {
+    //   state.assignments = state.assignments.filter((item: any) => item._id !== assignmentId);
+    // },
     updateAssignment: (state, { payload: assignment }) => {
       state.assignments = state.assignments.map((item: any) =>
         item._id === assignment._id ? assignment : item
@@ -57,6 +63,6 @@ const assignmentsSlice = createSlice({
   },
 });
 
-export const {deleteAssignment, setAssignments } =
+export const { setAssignments } =
   assignmentsSlice.actions;
 export default assignmentsSlice.reducer;

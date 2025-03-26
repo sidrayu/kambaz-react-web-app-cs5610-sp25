@@ -1,8 +1,9 @@
 import { Container, Form, Row, Col, Card } from "react-bootstrap";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-
+import { useDispatch } from "react-redux";
+import * as assignmentsClient from "./client";
+import { useEffect } from "react";
 
 export default function AssignmentEditor({
     isFaculty, addAssignment, updateAssignment }: {
@@ -14,15 +15,28 @@ export default function AssignmentEditor({
         return date ? new Date(date).toISOString().slice(0, 16) : "";
     };
 
-    const { cid, assignmentId } = useParams();
-    const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+    const {cid, assignmentId } = useParams();
     const dispatch = useDispatch<any>();
     const navigate = useNavigate();
 
     // Find existing assignment or create empty template for new assignment
-    const existingAssignment = assignmentId
-        ? assignments.find((a: any) => a.courseId === cid && a._id === assignmentId)
-        : null;
+    async function getExistingAssignment(assignmentId: string | undefined) {
+        if (!assignmentId || assignmentId === "AddNewAssignment") return null;
+        const assignment = await assignmentsClient.findAssignmentById(assignmentId);
+   
+        if (!assignment) {
+            return null;
+        }   
+        return assignment;
+    }
+
+    const [existingAssignment, setExistingAssignment] = useState<any>(null);
+    useEffect(() => {
+        (async () => {
+            const result = await getExistingAssignment(assignmentId);
+            setExistingAssignment(result);
+        })();
+    }, [assignmentId]);
 
     // Initialize state with existing values or defaults for new assignment 
     const [title, setTitle] = useState(existingAssignment?.title || "");
@@ -188,6 +202,7 @@ export default function AssignmentEditor({
                                 Cancel
                             </Link>
                             <button
+
                                 type="button"
                                 onClick={handleSave}
                                 className="btn btn-danger"
