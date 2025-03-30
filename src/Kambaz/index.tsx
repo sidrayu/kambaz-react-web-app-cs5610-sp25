@@ -6,14 +6,14 @@ import ProtectedRoute from "./Account/ProtectedRoute";
 import Dashboard from "./Dashboard";
 import KambazNavigation from "./Navigation";
 import Courses from "./Courses";
-import { addCourse, deleteCourse, updateCourse } from "./Courses/reducer";
+import { addCourse, deleteCourse, updateCourse, fetchAllCourses } from "./Courses/reducer";
+import { setEnrollments } from "./Enrollment/reducer";
 import { useEffect, useState } from "react";
 import "./styles.css";
 import Session from "./Account/Session";
 import * as userClient from "./Account/client";
 
 export default function Kambaz() {
-    // const coursesList = useSelector((state: any) => state.coursesReducer.courses);
     const dispatch = useDispatch<any>();
     const { isFaculty } = useUserRole();
 
@@ -71,12 +71,13 @@ export default function Kambaz() {
                     <Route path="/Dashboard" element={
                         <ProtectedRoute>
                             <Dashboard
-                                courses={courses}
                                 course={course}
                                 setCourse={setCourse}
                                 addNewCourse={handleAddCourse}
                                 deleteCourse={hancleDeleteCourse}
                                 updateCourse={handleUpdateCourse}
+                                setEnrollments={setEnrollments}
+                                fetchAllCourses={fetchAllCourses}
                                 isFaculty={isFaculty}
                             />
                         </ProtectedRoute>

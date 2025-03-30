@@ -23,6 +23,12 @@ export const updateCourse = createAsyncThunk(
   }
 );
 
+export const fetchAllCourses = createAsyncThunk(
+  "courses/fetchAllCourses",
+  async () => {
+    return await courseClient.fetchAllCourses();
+  }
+);
 
 const initialState: {
   courses: any[];
@@ -34,23 +40,9 @@ const coursesSlice = createSlice({
   name: "courses",
   initialState,
   reducers: {
-    setCourses: (state, { payload }) => {
-      state.courses = payload;
+    setCourses: (state, action ) => {
+      state.courses = action.payload;
     },
-    // remove or comment out the old addCourse
-    // addCourse: (state, { payload: course }) => {
-    //     const newCourse = await userClient.createCourse(course);
-    //     state.courses = [...state.courses, newCourse] as any;
-    // },
-    // deleteCourse: (state, { payload: courseId }) => {
-    //   state.courses = state.courses.filter(
-    //     (c: any) => c._id !== courseId);
-    // },
-    // updateCourse: (state, { payload: course }) => {
-    //   state.courses = state.courses.map((c: any) =>
-    //     c._id === course._id ? course : c
-    //   );
-    // },
   },
   extraReducers: (builder) => {
     builder.addCase(addCourse.fulfilled, (state, { payload }) => {
@@ -63,6 +55,9 @@ const coursesSlice = createSlice({
       state.courses = state.courses.map((c: any) =>
         c._id === payload._id ? payload : c
       );
+    });
+    builder.addCase(fetchAllCourses.fulfilled, (state, { payload }) => {
+      state.courses = payload;
     });
   },
 });

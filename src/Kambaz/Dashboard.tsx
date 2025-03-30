@@ -1,26 +1,62 @@
 import { Link } from "react-router-dom";
 import { Button, Card, FormControl } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import * as enrollmentClient from "./Enrollment/client";
+
+
 export default function Dashboard(
-    { courses, course, setCourse, addNewCourse,
-        deleteCourse, updateCourse, isFaculty }: {
-            courses: any[]; course: any; setCourse: (course: any) => void;
-            addNewCourse: () => void; deleteCourse: (courseId: string) => void;
-            updateCourse: () => void; isFaculty: () => boolean;
+    { course, setCourse, addNewCourse,
+        deleteCourse, updateCourse, setEnrollments, fetchAllCourses, isFaculty }: {
+            course: any;
+            setCourse: (course: any) => void;
+            addNewCourse: () => void;
+            deleteCourse: (courseId: string) => void;
+            updateCourse: () => void; 
+            setEnrollments: (enrollments: any) => void;
+            fetchAllCourses: () => void;
+            isFaculty: () => boolean;
         }) {
-    // const { currentUser } = useSelector((state: any) => state.accountReducer);
-    // const enrollments = useSelector((state: any) => state.enrollmentReducer.enrollments);
-    // const dispatch = useDispatch();
+
+    const { currentUser } = useSelector((state: any) => state.accountReducer);
+    const dispatch = useDispatch<any>();
+
+    const fetchCourses = async () => {
+        await dispatch(fetchAllCourses());
+    };
+    useEffect(() => {
+        fetchCourses();
+    }, [currentUser]);
+
+    const fetchEnrollments = async () => {
+        const enrollments = await enrollmentClient.findEnrollmentsForUser(currentUser._id as string);
+        await dispatch(setEnrollments(enrollments));
+    };
+    useEffect(() => {
+        fetchEnrollments();
+    }, [currentUser._id]);
+
+    const courses = useSelector((state: any) => state.courseReducer.courses);
+    const enrollments = useSelector((state: any) => state.enrollmentReducer.enrollments);
+
     const [showAll, setShowAll] = useState(false);
 
     const toggleShowAll = () => setShowAll(!showAll);
 
+    const handleEnrollCourse = async (userId: string, courseId: string) => {
+        await enrollmentClient.enrollCourse(userId,courseId);
+        fetchEnrollments();
+    }
+    const handleUnenrollCourse = async (userId: string, courseId: string) => {      
+        await enrollmentClient.unenrollCourse(userId,courseId);
+        fetchEnrollments();
+    };
+
     const displayedCourses = showAll || isFaculty()
         ? courses
-        : courses;
-        // : courses.filter(c =>
-        //     enrollments.some((e: any) => e.user === currentUser._id && e.course === c._id)
-        // );
+        : courses.filter((c: any) =>
+            enrollments.some((e: any) => e.user === currentUser._id && e.course === c._id)
+        );
 
     return (
         <div className="p-4" id="wd-dashboard">
@@ -85,7 +121,7 @@ export default function Dashboard(
             )}
             <div className="row" id="wd-dashboard-courses">
                 <div className="row row-cols-1 row-cols-md-5 g-4">
-                    {displayedCourses.map((course) => (
+                    {displayedCourses.map((course: any) => (
                         <div key={course._id} className="col" style={{ width: "300px" }}>
                             <Card>
                                 <Card.Img src={course.image || "/images/reactjs.jpg"}
@@ -121,17 +157,17 @@ export default function Dashboard(
                                             </Button>
                                         </>
                                     )}
-                                    {/* {!isFaculty() && (
+                                    {!isFaculty() && (
                                         enrollments.some((e: any) => e.user === currentUser._id && e.course === course._id)
                                             ? <Button variant="danger"
-                                                onClick={() => dispatch(unenrollCourse({ userId: currentUser._id, courseId: course._id }))}>
+                                                onClick={() => handleUnenrollCourse( course._id, currentUser._id)}>
                                                 Unenroll
                                             </Button>
                                             : <Button variant="success"
-                                                onClick={() => dispatch(enrollCourse({ userId: currentUser._id, courseId: course._id }))}>
+                                                onClick={() => handleEnrollCourse(course._id, currentUser._id)}>
                                                 Enroll
                                             </Button>
-                                    )} */}
+                                    )}
                                 </Card.Body>
                             </Card>
                         </div>

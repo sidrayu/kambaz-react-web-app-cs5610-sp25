@@ -7,9 +7,7 @@ export const findMyCourses = async () => {
     return data;
   };
 
-
 export const signin = async (credentials: any) => {
-    console.log("Account.client Signincredentials", credentials);
     const response = await axiosWithCredentials.post(`${USERS_API}/signin`, credentials);
     return response.data;
 };
