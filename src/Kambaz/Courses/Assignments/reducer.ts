@@ -1,7 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as courseClient from "../client";
-
-
 export const addAssignment = createAsyncThunk(
   "assignments/addAssignment",
   async (assignment: any) => {

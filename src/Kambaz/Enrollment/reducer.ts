@@ -40,18 +40,6 @@ const enrollmentSlice = createSlice({
     setEnrollments: (state, { payload }) => {
       state.enrollments = payload;
     },
-    // enrollCourse(state, action: PayloadAction<{ userId: string; courseId: string }>) {
-    //   console.log("enrollCourse", action.payload);
-    //   state.enrollments.push({_id: uuidv4(), user: action.payload.userId, course: action.payload.courseId });
-    //   localStorage.setItem("enrollments", JSON.stringify(state.enrollments));
-    // },
-    // unenrollCourse(state, action: PayloadAction<{ userId: string; courseId: string }>) {
-    //   console.log("unenrollCourse", action.payload);
-    //   state.enrollments = state.enrollments.filter(
-    //     e => !(e.user === action.payload.userId && e.course === action.payload.courseId)
-    //   );
-    //   localStorage.setItem("enrollments", JSON.stringify(state.enrollments));
-    // },
   },
 });
 
