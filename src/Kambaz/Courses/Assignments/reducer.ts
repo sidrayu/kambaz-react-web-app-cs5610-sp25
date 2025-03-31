@@ -25,7 +25,7 @@ export const deleteAssignment = createAsyncThunk(
 );
 
 const initialState = {
-  assignments: [],
+  assignments: [] as any[],
 };
 
 const assignmentsSlice = createSlice({
@@ -41,6 +41,16 @@ const assignmentsSlice = createSlice({
       ) as any;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(addAssignment.fulfilled, (state, { payload }) => {
+      state.assignments.push(payload);
+    });
+    builder.addCase(deleteAssignment.fulfilled, (state, { payload }) => {
+      state.assignments = state.assignments.filter(
+        (assignment: any) => assignment._id !== payload
+      );
+    });
+  }
 });
 
 export const { setAssignments } =
