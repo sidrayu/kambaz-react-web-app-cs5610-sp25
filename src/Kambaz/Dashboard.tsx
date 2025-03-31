@@ -51,6 +51,11 @@ export default function Dashboard(
         await enrollmentClient.unenrollCourse(userId,courseId);
         fetchEnrollments();
     };
+    // const hancleDeleteCourse = async (courseId: string) => {
+    //     if (!isFaculty()) return;
+    //     await dispatch(deleteCourse(courseId));
+    //     await fetchCourses();
+    // };
 
     const displayedCourses = showAll || isFaculty()
         ? courses

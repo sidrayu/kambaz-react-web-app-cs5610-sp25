@@ -29,22 +29,40 @@ export default function Kambaz() {
     const { currentUser } = useSelector((state: any) => state.accountReducer);
 
     const [courses, setCourses] = useState<any[]>([]);
+
     const fetchCourses = async () => {
-      try {
-        const courses = await userClient.findMyCourses();
-        setCourses(courses);
-      } catch (error) {
-        console.error(error);
-      }
+        await dispatch(fetchAllCourses());
     };
     useEffect(() => {
-      fetchCourses();
+        fetchCourses();
     }, [currentUser]);
+    
+    // const fetchCourses = async () => {
+    //   try {
+    //     // const courses = await userClient.findMyCourses();
+    //     const courses = await fetchAllCourses();
+    //     setCourses(courses);
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // };
+    // useEffect(() => {
+    //   fetchCourses();
+    // }, [currentUser]);
   
     const handleAddCourse = async () => {
         if (!isFaculty()) return;
         await dispatch(addCourse(course));
         await fetchCourses();
+        setCourse({
+            _id: "0",
+            name: "New Course",
+            number: "New Number",
+            startDate: "2023-09-10",
+            endDate: "2023-12-15",
+            image: "/images/reactjs.jpg",
+            description: "New Description"
+        });
     };
 
     const hancleDeleteCourse = async (courseId: string) => {

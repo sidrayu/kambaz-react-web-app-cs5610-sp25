@@ -21,4 +21,3 @@ export default function Session({ children }: { children: any }) {
     return children;
   }
 }
-

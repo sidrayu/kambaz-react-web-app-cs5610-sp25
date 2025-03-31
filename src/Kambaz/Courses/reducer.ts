@@ -12,6 +12,8 @@ export const addCourse = createAsyncThunk(
 export const deleteCourse = createAsyncThunk(
   "courses/deleteCourse",
   async (courseId: string) => {
+    console.log("Deleting course with ID:", courseId);
+  
     return await courseClient.deleteCourse(courseId);
   }
 );
@@ -49,7 +51,12 @@ const coursesSlice = createSlice({
       state.courses.push(payload);
     });
     builder.addCase(deleteCourse.fulfilled, (state, { payload }) => {
-      state.courses = state.courses.filter((c: any) => c._id !== payload._id);
+      console.log("Deleting course:", payload);
+      console.log("Current courses:", state.courses);
+      console.log("Courses before deletion:", state.courses);
+      console.log("Courses after deletion:", state.courses.filter((c: any) => c._id !== payload._id));
+      
+      state.courses = state.courses.filter((c: any) => c._id !== payload);
     });
     builder.addCase(updateCourse.fulfilled, (state, { payload }) => {
       state.courses = state.courses.map((c: any) =>
