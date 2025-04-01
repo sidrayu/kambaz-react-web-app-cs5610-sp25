@@ -11,7 +11,6 @@ import { setEnrollments } from "./Enrollment/reducer";
 import { useEffect, useState } from "react";
 import "./styles.css";
 import Session from "./Account/Session";
-import * as userClient from "./Account/client";
 
 export default function Kambaz() {
     const dispatch = useDispatch<any>();
