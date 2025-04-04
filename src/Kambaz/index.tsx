@@ -36,19 +36,7 @@ export default function Kambaz() {
         fetchCourses();
     }, [currentUser]);
     
-    // const fetchCourses = async () => {
-    //   try {
-    //     // const courses = await userClient.findMyCourses();
-    //     const courses = await fetchAllCourses();
-    //     setCourses(courses);
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // };
-    // useEffect(() => {
-    //   fetchCourses();
-    // }, [currentUser]);
-  
+
     const handleAddCourse = async () => {
         if (!isFaculty()) return;
         await dispatch(addCourse(course));
