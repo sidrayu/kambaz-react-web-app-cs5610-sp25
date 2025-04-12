@@ -35,5 +35,9 @@ export const profile = async () => {
     const { data } = await axiosWithCredentials.post(`${USERS_API}/current/courses`, course);
     return data;
   };
-
+  export const findAllUsers = async () => {
+    const response = await axiosWithCredentials.get(USERS_API);
+    return response.data;
+  };
+  
   
