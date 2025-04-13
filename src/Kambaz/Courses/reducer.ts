@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import * as userClient from "../Account/client";
 import * as courseClient from "../Courses/client";
 
 export const addCourse = createAsyncThunk(
