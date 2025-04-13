@@ -11,6 +11,9 @@ import { setEnrollments } from "./Enrollment/reducer";
 import { useEffect, useState } from "react";
 import "./styles.css";
 import Session from "./Account/Session";
+import * as courseClient from "./Courses/client";
+
+
 
 export default function Kambaz() {
     const dispatch = useDispatch<any>();
@@ -30,6 +33,7 @@ export default function Kambaz() {
     const [courses] = useState<any[]>([]);
 
     const fetchCourses = async () => {
+        // await dispatch(courseClient.fetchAllCourses());
         await dispatch(fetchAllCourses());
     };
     useEffect(() => {

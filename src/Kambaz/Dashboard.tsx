@@ -51,12 +51,8 @@ export default function Dashboard(
         await enrollmentClient.unenrollCourse(userId,courseId);
         fetchEnrollments();
     };
-    // const hancleDeleteCourse = async (courseId: string) => {
-    //     if (!isFaculty()) return;
-    //     await dispatch(deleteCourse(courseId));
-    //     await fetchCourses();
-    // };
 
+    // const displayedCourses = courses;
     const displayedCourses = showAll || isFaculty()
         ? courses
         : courses.filter((c: any) =>
@@ -157,7 +153,12 @@ export default function Dashboard(
                                             <Button
                                                 variant="danger"
                                                 id="wd-delete-course-click"
-                                                onClick={() => deleteCourse(course._id)}>
+                                                // onClick={() => deleteCourse(course._id)}
+                                                onClick={async () => {
+                                                    await deleteCourse(course._id);
+                                                    fetchCourses();
+                                                  }}
+                                                >
                                                 Delete
                                             </Button>
                                         </>

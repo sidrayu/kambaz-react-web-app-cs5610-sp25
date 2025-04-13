@@ -5,7 +5,7 @@ import * as courseClient from "../Courses/client";
 export const addCourse = createAsyncThunk(
   "courses/addCourse",
   async (course: any) => {
-    return await userClient.createCourse(course);
+    return await courseClient.createCourse(course);
   }
 );
 
