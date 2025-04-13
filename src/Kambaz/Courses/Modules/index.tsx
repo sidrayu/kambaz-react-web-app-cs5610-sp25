@@ -21,9 +21,10 @@ export default function Modules() {
     const modules = await coursesClient.findModulesForCourse(cid as string);
     dispatch(setModules(modules));
   };
+
   useEffect(() => {
     fetchModules();
-  }, []);
+  }, [cid]);
   const createModuleForCourse = async () => {
     if (!cid) return;
     const newModule = { name: moduleName, course: cid };
@@ -38,18 +39,34 @@ export default function Modules() {
     await modulesClient.updateModule(module);
     dispatch(updateModule(module));
   };
-
+  const addModuleHandler = async () => {
+    if (!cid) return;
+    const newModule = await coursesClient.createModuleForCourse(cid!, {
+      name: moduleName,
+      course: cid,
+    });
+    dispatch(addModule(newModule));
+    setModuleName("");
+  };
+  const updateModuleHandler = async (module: any) => {
+    await modulesClient.updateModule(module);
+    dispatch(updateModule(module));
+  };
+ 
 
   return (
     <Container>
       <div>
-        <ModulesControls 
+        <ModulesControls
+          addModule={addModuleHandler}
+
           moduleName={moduleName}
           setModuleName={setModuleName}
-          addModule={createModuleForCourse}
+          //addModule={createModuleForCourse}
+
           //addModule={() => {
-            //dispatch(addModule({ name: moduleName, course: cid }));
-            //setModuleName("");
+          //dispatch(addModule({ name: moduleName, course: cid }));
+          //setModuleName("");
           //}}
           isFaculty={isFaculty}
         />
@@ -66,13 +83,11 @@ export default function Modules() {
                     <FormControl
                       className="w-50 d-inline-block"
                       onChange={(e) =>
-                        dispatch(
-                          updateModule({ ...module, name: e.target.value })
-                        )
+                        updateModuleHandler({ ...module, name: e.target.value })
                       }
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
-                          saveModule({ ...module, editing: false });
+                          updateModuleHandler({ ...module, editing: false });
                         }
                       }}
                       defaultValue={module.name}
