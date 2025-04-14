@@ -48,7 +48,7 @@ export default function AssignmentEditor({
             setDueDate(existingAssignment.dueDate || "2025/01/01");
             setAvailableDate(existingAssignment.availableFromDate || "2025/01/01");
             setAvailableUntil(existingAssignment.availableUtilDate || "2025/01/01");
-            setModules(existingAssignment.modules || "Module 1");        
+            setModules(existingAssignment.modules || "Module 1");
         }
     }, [existingAssignment]);
     const [title, setTitle] = useState(existingAssignment?.title || "");
@@ -58,7 +58,7 @@ export default function AssignmentEditor({
     const [availableFromDate, setAvailableDate] = useState(existingAssignment?.availableFromDate || "2025/01/01");
     const [availableUtilDate, setAvailableUntil] = useState(existingAssignment?.availableUtilDate || "2025/01/01");
     const [modules, setModules] = useState(existingAssignment?.modules || "Module 1");
-    
+
     // If editing and assignment not found
     if (assignmentId != "AddNewAssignment" && !existingAssignment) {
         return <div>Assignment not found</div>;
@@ -173,11 +173,50 @@ export default function AssignmentEditor({
                     </Col>
                 </Form.Group>
 
-                {/* ...existing code for other form groups... */}
+                <Form.Group controlId="displayGrade" className="mb-3">
+                    <Row>
+                        <Col sm={3}>
+                            <Form.Label className="d-flex justify-content-end">Display Grade as</Form.Label>
+                        </Col>
+                        <Col sm={9}>
+                            <Form.Control as="select" defaultValue="Percentage">
+                                <option>Percentage</option>
+                                <option>Points</option>
+                            </Form.Control>
+                        </Col>
+                    </Row>
+                </Form.Group>
+
+                {/* Assignment Group */}
+                <Form.Group controlId="assignmentGroup" className="mb-3">
+                    <Row>
+                        <Col sm={3}>
+                            <Form.Label className="d-flex justify-content-end">Assignment Group</Form.Label>
+                        </Col>
+                        <Col sm={9}>
+                            <Form.Control as="select" defaultValue="ASSIGNMENTS">
+                                <option>QUIZZES</option>
+                                <option>ASSIGNMENTS</option>
+                                <option>EXAMS</option>
+                                <option>PROJECTS</option>
+                            </Form.Control>
+                        </Col>
+                    </Row>
+                </Form.Group>
 
                 {/* Assign Section */}
                 <Col sm={4}>
                     <Card className="p-3 mb-3">
+
+                        <Form.Group controlId="submissionType" className="mb-3">
+                            <Form.Label >Submission Type</Form.Label>
+                            <Form.Control as="select">
+                                <option>Online</option>
+                                <option>In Person</option>
+                            </Form.Control>
+                        </Form.Group>
+
+
                         <Form.Group className="mb-3" controlId="assignTo">
                             <Form.Label><strong>Assign to</strong></Form.Label>
                             <Form.Control type="text" value="Everyone" readOnly />
@@ -216,7 +255,7 @@ export default function AssignmentEditor({
                         </Row>
                     </Card>
 
-                    {/* Action Buttons */}
+                    {/* AÏction Buttons */}
                     {isFaculty() && (
                         <div className="d-flex justify-content-end gap-2">
                             <Link
