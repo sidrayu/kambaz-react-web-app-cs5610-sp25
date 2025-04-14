@@ -73,6 +73,9 @@ export default function Kambaz() {
             const enrolledCourses = await userClient.findCoursesForUser(
                 currentUser._id
             );
+            console.log("Kambaz.index.fetchCourses", allCourses);
+            console.log("Kambaz.index.fetchCourses.enrolledCourses", enrolledCourses);
+            
             const courses = allCourses.map((course: any) => {
                 if (enrolledCourses.find((c: any) => c._id === course._id)) {
                     return { ...course, enrolled: true };

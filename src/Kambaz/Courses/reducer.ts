@@ -11,7 +11,6 @@ export const addCourse = createAsyncThunk(
 export const deleteCourse = createAsyncThunk(
   "courses/deleteCourse",
   async (courseId: string) => {
-  
     return await courseClient.deleteCourse(courseId);
   }
 );
@@ -50,8 +49,7 @@ const coursesSlice = createSlice({
       state.courses.push(payload);
     });
     builder.addCase(deleteCourse.fulfilled, (state, { payload }) => {
-      
-      state.courses = state.courses.filter((c: any) => c._id !== payload);
+      state.courses = state.courses.filter((c: any) => c?._id !== payload);
     });
     builder.addCase(updateCourse.fulfilled, (state, { payload }) => {
       state.courses = state.courses.map((c: any) =>
