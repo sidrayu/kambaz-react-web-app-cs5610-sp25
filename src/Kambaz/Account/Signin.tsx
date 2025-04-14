@@ -19,14 +19,14 @@ export default function Signin() {
     <div id="wd-signin-screen">
       <h1>Sign in</h1>
       <Form>
-        <FormControl 
+        <FormControl
           defaultValue={credentials.username}
           onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
           className="mb-2"
           placeholder="username"
           id="wd-username"
           autoComplete="username" />
-        <FormControl 
+        <FormControl
           defaultValue={credentials.password}
           onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
           className="mb-2"
@@ -34,7 +34,7 @@ export default function Signin() {
           type="password"
           id="wd-password"
           autoComplete="current-password" />
-        <Button 
+        <Button
           onClick={signin}
           id="wd-signin-btn"
           className="w-100">

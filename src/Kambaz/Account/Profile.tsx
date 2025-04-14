@@ -29,8 +29,8 @@ export default function Profile() {
     <div className="wd-profile-screen">
     <h3>Profile</h3>
     {profile && (
-      <div>
-        <button onClick={updateProfile} className="btn btn-primary w-100 mb-2"> Update </button>
+      <form onSubmit={(e) => { e.preventDefault(); updateProfile(); }}>
+        <Button type="submit" className="btn btn-primary w-100 mb-2"> Update </Button>
 
         <FormControl defaultValue={profile.username} id="wd-username" className="mb-2"
                      onChange={(e) => setProfile({ ...profile, username:  e.target.value })}/>
@@ -52,6 +52,6 @@ export default function Profile() {
         <Button onClick={signout} className="w-100 mb-2" id="wd-signout-btn">
           Sign out
         </Button>
-      </div>
+      </form>
     )}
 </div>);}
