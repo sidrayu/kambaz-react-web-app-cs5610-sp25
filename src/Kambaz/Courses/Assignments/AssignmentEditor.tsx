@@ -15,7 +15,7 @@ export default function AssignmentEditor({
         return date ? new Date(date).toISOString().slice(0, 16) : "";
     };
 
-    const {cid, assignmentId } = useParams();
+    const { cid, assignmentId } = useParams();
     const dispatch = useDispatch<any>();
     const navigate = useNavigate();
 
@@ -23,10 +23,10 @@ export default function AssignmentEditor({
     async function getExistingAssignment(assignmentId: string | undefined) {
         if (!assignmentId || assignmentId === "AddNewAssignment") return null;
         const assignment = await assignmentsClient.findAssignmentById(assignmentId);
-   
+
         if (!assignment) {
             return null;
-        }   
+        }
         return assignment;
     }
 
@@ -39,18 +39,31 @@ export default function AssignmentEditor({
     }, [assignmentId]);
 
     // Initialize state with existing values or defaults for new assignment 
+    // Update form fields when existingAssignment is loaded
+    useEffect(() => {
+        if (existingAssignment) {
+            setTitle(existingAssignment.title || "");
+            setDescription(existingAssignment.description || "");
+            setPoints(existingAssignment.points || 0);
+            setDueDate(existingAssignment.dueDate || "2025/01/01");
+            setAvailableDate(existingAssignment.availableFromDate || "2025/01/01");
+            setAvailableUntil(existingAssignment.availableUtilDate || "2025/01/01");
+            setModules(existingAssignment.modules || "Module 1");        
+        }
+    }, [existingAssignment]);
     const [title, setTitle] = useState(existingAssignment?.title || "");
-    // const [modules, setModules] = useState(existingAssignment?.modules || "Module 1");
     const [description, setDescription] = useState(existingAssignment?.description || "");
     const [points, setPoints] = useState(existingAssignment?.points || 0);
     const [dueDate, setDueDate] = useState(existingAssignment?.dueDate || "2025/01/01");
     const [availableFromDate, setAvailableDate] = useState(existingAssignment?.availableFromDate || "2025/01/01");
     const [availableUtilDate, setAvailableUntil] = useState(existingAssignment?.availableUtilDate || "2025/01/01");
-
+    const [modules, setModules] = useState(existingAssignment?.modules || "Module 1");
+    
     // If editing and assignment not found
     if (assignmentId != "AddNewAssignment" && !existingAssignment) {
         return <div>Assignment not found</div>;
     }
+
 
     const handlAddAssignment = async (assignment: any) => {
         await dispatch(
@@ -68,7 +81,7 @@ export default function AssignmentEditor({
     };
 
     const handlUpdateAssignment = async (assignment: any) => {
-       await dispatch(
+        await dispatch(
             updateAssignment({
                 _id: assignment._id,
                 courseId: assignment.courseId,
@@ -114,7 +127,7 @@ export default function AssignmentEditor({
             <Form>
                 {/* Assignment Name */}
                 <Form.Group className="mb-3" controlId="assignmentName">
-                    <Form.Label>Assignment Name</Form.Label>
+                    <Form.Label>Assignment Title</Form.Label>
                     <Col sm={5}>
                         <Form.Control
                             type="text"
@@ -123,9 +136,20 @@ export default function AssignmentEditor({
                         />
                     </Col>
                 </Form.Group>
+                <Form.Group className="mb-3" controlId="modules">
+                    <Form.Label>Modules</Form.Label>
+                    <Col sm={5}>
+                        <Form.Control
+                            type="text"
+                            value={modules}
+                            onChange={(e) => setModules(e.target.value)}
+                        />
+                    </Col>
+                </Form.Group>
 
                 {/* Description */}
-                <Form.Group as={Row} className="mb-3" controlId="wd-description">
+                <Form.Group as={Row} className="mb-3" controlId="description">
+                    <Form.Label>Description</Form.Label>
                     <Col sm={5}>
                         <Form.Control
                             as="textarea"

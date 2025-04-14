@@ -6,7 +6,7 @@ const COURSES_API = `${REMOTE_SERVER}/api/courses`;
 
 export const updateAssignment = async (assignment: any) => {
   const response = await axios.put(
-    `${COURSES_API}/${assignment.courseId}/assignments/${assignment._id}`,
+    `${COURSES_API}/assignments/${assignment._id}`,
     assignment
   );
   return response.data;
@@ -42,7 +42,6 @@ export const createModuleForCourse = async (courseId: string, module: any) => {
     `${COURSES_API}/${courseId}/modules`,
     module
   );
-  console.log("createModuleForCourse", response.data);
   return response.data;
 };
 

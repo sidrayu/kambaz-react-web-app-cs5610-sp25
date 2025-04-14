@@ -19,48 +19,6 @@ export default function Dashboard(
         }) {
 
     const courses = useSelector((state: any) => state.courseReducer.courses);
-    console.log("Kambaz.Dashboard.courses", courses);
-
-    // const { currentUser } = useSelector((state: any) => state.accountReducer);
-    // const dispatch = useDispatch<any>();
-
-    // const fetchCourses = async () => {
-    //     await dispatch(fetchAllCourses());
-    // };
-    // useEffect(() => {
-    //     fetchCourses();
-    // }, [currentUser]);
-
-    // const fetchEnrollments = async () => {
-    //     const enrollments = await enrollmentClient.findEnrollmentsForUser(currentUser._id as string);
-    //     await dispatch(setEnrollments(enrollments));
-    // };
-    // useEffect(() => {
-    //     fetchEnrollments();
-    // }, [currentUser._id]);
-    
-    // const enrollments = useSelector((state: any) => state.enrollmentReducer.enrollments);
-
-    // const [showAll, setShowAll] = useState(false);
-
-    // const toggleShowAll = () => setShowAll(!showAll);
-
-    // const handleEnrollCourse = async (userId: string, courseId: string) => {
-    //     await enrollmentClient.enrollCourse(userId, courseId);
-    //     fetchEnrollments();
-    // }
-    // const handleUnenrollCourse = async (userId: string, courseId: string) => {
-    //     await enrollmentClient.unenrollCourse(userId, courseId);
-    //     fetchEnrollments();
-    // };
-
-    // const displayedCourses = courses;     
-    // const displayedCourses = showAll || isFaculty()
-    //     ? courses
-    //     : courses.filter((c: any) =>
-    //         enrollments.some((e: any) => e.user === currentUser._id && e.course === c._id)
-    //     );
-
     return (
         <div className="p-4" id="wd-dashboard">
             <h1 id="wd-dashboard-title">Dashboard

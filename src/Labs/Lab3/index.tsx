@@ -35,7 +35,6 @@ import PathParameters from "./PathParameters";
 import { useSelector } from "react-redux";
 
 export default function Lab3() {
-  console.log('Hello World!');
   const { todos } = useSelector((state: any) => state.todosReducer);
   return (
     <Container>

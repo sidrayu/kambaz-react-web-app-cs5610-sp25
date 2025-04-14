@@ -13,9 +13,10 @@ import { useEffect } from "react";
 export default function Assignments() {
     const { cid } = useParams();
     const { assignments } = useSelector((state: any) => state.assignmentsReducer);
-    const courseAssignments = assignments.filter(
-        (assignment: { courseId: string | undefined; }) => assignment.courseId === cid
-    );
+    
+    const courseAssignments = Array.isArray(assignments)
+        ? assignments.filter((assignment: { courseId: string | undefined; }) => assignment.courseId === cid)
+        : [];
     
     const dispatch = useDispatch<any>();
     const removeAssignment = async (assignmentId: string) => {
@@ -27,7 +28,7 @@ export default function Assignments() {
         const assignments = await assignmentsClient.findAssignmentsForCourse(cid as string);
         dispatch(setAssignments(assignments));
     };
-    useEffect(() => {
+    useEffect(() => {        
         fetchAssignments();
     }, [cid]);
 

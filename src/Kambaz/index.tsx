@@ -36,9 +36,7 @@ export default function Kambaz() {
                 console.warn("No currentUser available");
                 return;
             }
-            console.log("Kambaz.index.currentUser", currentUser);
             const courses = await userClient.findCoursesForUser(currentUser._id);
-            console.log("Kambaz.index.findCoursesForUser", courses);
             dispatch(setCourses(courses))
         } catch (error) {
             console.error(error);
@@ -73,8 +71,6 @@ export default function Kambaz() {
             const enrolledCourses = await userClient.findCoursesForUser(
                 currentUser._id
             );
-            console.log("Kambaz.index.fetchCourses", allCourses);
-            console.log("Kambaz.index.fetchCourses.enrolledCourses", enrolledCourses);
             
             const courses = allCourses.map((course: any) => {
                 if (enrolledCourses.find((c: any) => c._id === course._id)) {
@@ -90,8 +86,6 @@ export default function Kambaz() {
     };
 
     useEffect(() => {
-        console.log("Kambaz.index.useEffect.enrolling: ", enrolling);
-        console.log("Kambaz.index.useEffect.currentUser: ", currentUser);
         if (enrolling) {
             fetchCourses();
         } else {
