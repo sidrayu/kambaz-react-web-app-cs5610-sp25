@@ -1,0 +1,54 @@
+/* Styles specific to the ArrayStateVariable component */
+#wd-array-state-variables {
+    font-family: Arial, sans-serif;
+    width: 300px;
+    margin: 0;  /* Aligns the component to the left of the webpage */
+    background: #f4f4f4;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+  #wd-array-state-variables h2 {
+    color: black;
+  }
+  
+  #wd-array-state-variables button {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  #wd-array-state-variables button:hover {
+    background-color: darkgreen;
+  }
+  
+  #wd-array-state-variables ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  #wd-array-state-variables ul li {
+    background: white;
+    margin-top: 8px;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  #wd-array-state-variables #wd-delete-element-click {
+    background-color: red;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  
+  #wd-array-state-variables #wd-delete-element-click:hover {
+    background-color: darkred;
+  }
+  

@@ -1,0 +1,66 @@
+/* Container for the entire Todo List */
+.todo-list-container {
+  width: 378px; /* Adjust the width as needed */
+  margin: 0; /* Centering the container */
+  padding: 20px;
+  background: #fff; /* White background */
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+/* Style for the headings inside the container */
+.todo-list-container h2 {
+  color: #333;
+  text-align: center; /* Center the heading text */
+  margin-bottom: 20px; /* Space below heading */
+}
+
+/* Style for the list where the todos are displayed */
+.list-group {
+  list-style: none; /* Remove bullet points */
+  padding: 0; /* Remove default padding */
+}
+
+/* Individual list items */
+.list-group-item {
+  display: flex;
+  justify-content: space-between; /* Distribute space between elements */
+  align-items: center; /* Vertically align the items */
+  padding: 10px;
+  margin-bottom: 10px; /* Space between list items */
+  background: #f9f9f9; /* Light gray background */
+  border-radius: 5px;
+}
+
+/* Styles for the input and buttons at the top */
+.input-field {
+  flex-grow: 1; /* Allows the input to grow and fill available space */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px; /* Space between the input field and the buttons */
+}
+
+/* General button styles */
+.todo-list-container button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 5px; /* Space between buttons */
+}
+
+/* Specific button colors */
+.button-add { background-color: #4CAF50; color: white; }
+.button-update { background-color: #FFC107; color: white; }
+.button-edit { background-color: #2196F3; color: white; }
+.button-delete { background-color: #f44336; color: white; }
+
+/* Hover effects for buttons */
+.button-add:hover,
+.button-update:hover,
+.button-edit:hover,
+.button-delete:hover {
+  opacity: 0.8;
+}
